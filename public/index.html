@@ -1,0 +1,3059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CareerCompass — Find Your Path After 12th</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --ink: #0a0a14;
+    --paper: #f5f0e8;
+    --gold: #d4a843;
+    --gold-light: #f0c96b;
+    --teal: #1a7a6e;
+    --teal-light: #2db3a0;
+    --rose: #c45c4a;
+    --muted: #6b6660;
+    --border: #ddd8cc;
+    --card-bg: #fdfaf4;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--ink);
+    color: var(--paper);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.35;
+  }
+
+  /* ── HEADER ── */
+  header {
+    padding: 1.5rem 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid rgba(212,168,67,0.2);
+    position: relative;
+  }
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 900;
+    color: var(--gold);
+    letter-spacing: -0.02em;
+  }
+  .logo span { color: var(--paper); }
+  .tagline {
+    font-size: 0.75rem; color: var(--muted);
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    position: relative;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(ellipse, rgba(212,168,67,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.2em;
+    color: var(--gold); text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 900; line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero p {
+    max-width: 560px; margin: 0 auto 2.5rem;
+    font-size: 1.1rem; line-height: 1.7;
+    color: rgba(245,240,232,0.7);
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--ink);
+    border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem; font-weight: 600;
+    padding: 0.9rem 2.5rem;
+    border-radius: 2px;
+    transition: all 0.2s;
+    letter-spacing: 0.01em;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,168,67,0.35); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--paper);
+    border: 1px solid rgba(245,240,232,0.3);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem; font-weight: 500;
+    padding: 0.9rem 2rem;
+    border-radius: 2px;
+    transition: all 0.2s;
+    margin-left: 1rem;
+  }
+  .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── PHASES NAV ── */
+  .phases-nav {
+    display: flex; justify-content: center; gap: 0;
+    margin: 0 2rem 3rem;
+    border: 1px solid rgba(212,168,67,0.25);
+    border-radius: 2px;
+    max-width: 600px;
+    margin-inline: auto;
+    overflow: hidden;
+  }
+  .phase-tab {
+    flex: 1; padding: 1rem 1.5rem;
+    background: transparent; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem; font-weight: 500;
+    color: rgba(245,240,232,0.5);
+    transition: all 0.2s;
+    position: relative;
+  }
+  .phase-tab.active {
+    background: var(--gold);
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .phase-tab:not(:last-child) { border-right: 1px solid rgba(212,168,67,0.25); }
+  .phase-tab .phase-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.1em;
+    display: block; margin-bottom: 0.2rem;
+    opacity: 0.6;
+  }
+  .phase-tab.active .phase-num { opacity: 0.7; }
+
+  /* ── MAIN CONTENT AREA ── */
+  .content-area {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+  }
+
+  /* ── SCREENS ── */
+  .screen { display: none; animation: fadeUp 0.4s ease; }
+  .screen.active { display: block; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── ASSESSMENT INTRO ── */
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+  }
+  .section-subtitle {
+    color: rgba(245,240,232,0.55);
+    font-size: 0.95rem; line-height: 1.6;
+    margin-bottom: 2.5rem;
+  }
+
+  /* ── QUIZ SYSTEM ── */
+  .quiz-shell {
+    background: rgba(245,240,232,0.03);
+    border: 1px solid rgba(245,240,232,0.1);
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  .quiz-skill-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(212,168,67,0.12);
+    border: 1px solid rgba(212,168,67,0.3);
+    border-radius: 999px;
+    padding: 0.3rem 0.9rem;
+    font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+  }
+  .quiz-qtype {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem; letter-spacing: 0.12em;
+    color: rgba(245,240,232,0.35);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .quiz-question {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem; font-weight: 700;
+    line-height: 1.45;
+    margin-bottom: 1.6rem;
+    color: var(--paper);
+  }
+  .quiz-options { display: flex; flex-direction: column; gap: 0.7rem; }
+  .quiz-option {
+    display: flex; align-items: flex-start; gap: 1rem;
+    background: rgba(245,240,232,0.04);
+    border: 1.5px solid rgba(245,240,232,0.12);
+    border-radius: 6px;
+    padding: 0.9rem 1.1rem;
+    cursor: pointer;
+    transition: all 0.18s;
+    text-align: left;
+  }
+  .quiz-option:hover { border-color: rgba(212,168,67,0.45); background: rgba(212,168,67,0.07); }
+  .quiz-option.selected { border-color: var(--gold); background: rgba(212,168,67,0.13); }
+  .quiz-option.correct  { border-color: #4CAF50; background: rgba(76,175,80,0.1); }
+  .quiz-option.wrong    { border-color: #f44336; background: rgba(244,67,54,0.08); }
+  .option-letter {
+    flex-shrink: 0;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(245,240,232,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem; font-weight: 700;
+    color: rgba(245,240,232,0.5);
+    transition: all 0.18s;
+    margin-top: 0.05rem;
+  }
+  .quiz-option.selected .option-letter { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+  .option-text { font-size: 0.92rem; line-height: 1.5; color: rgba(245,240,232,0.8); }
+
+  /* quiz nav */
+  .quiz-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 1.5rem; flex-wrap: wrap; gap: 0.8rem; }
+  .quiz-counter { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: rgba(245,240,232,0.35); }
+
+  /* skill progress dots */
+  .skill-dots { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1.8rem; }
+  .skill-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: rgba(245,240,232,0.12);
+    transition: background 0.3s;
+  }
+  .skill-dot.done { background: var(--teal-light); }
+  .skill-dot.active { background: var(--gold); transform: scale(1.3); }
+
+  /* score summary */
+  .score-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+  }
+  .score-chip {
+    background: rgba(245,240,232,0.04);
+    border: 1px solid rgba(245,240,232,0.1);
+    border-radius: 6px;
+    padding: 1rem;
+    text-align: center;
+  }
+  .score-chip .chip-icon { font-size: 1.5rem; margin-bottom: 0.4rem; }
+  .score-chip .chip-name { font-size: 0.72rem; color: rgba(245,240,232,0.5); margin-bottom: 0.4rem; }
+  .score-chip .chip-bar { height: 4px; border-radius: 2px; background: rgba(245,240,232,0.1); overflow: hidden; margin-bottom: 0.4rem; }
+  .score-chip .chip-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--teal-light), var(--gold)); transition: width 0.8s ease; }
+  .score-chip .chip-score { font-family: 'Space Mono', monospace; font-size: 0.8rem; color: var(--gold); font-weight: 700; }
+
+  /* ── FORM ELEMENTS ── */
+  .form-group { margin-bottom: 1.5rem; }
+  .form-label {
+    display: block;
+    font-size: 0.82rem; font-weight: 600;
+    color: rgba(245,240,232,0.7);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .form-input, .form-select, .form-textarea {
+    width: 100%;
+    background: rgba(245,240,232,0.05);
+    border: 1px solid rgba(245,240,232,0.15);
+    border-radius: 2px;
+    padding: 0.75rem 1rem;
+    color: var(--paper);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--gold);
+  }
+  .form-select option { background: #1a1a2e; color: var(--paper); }
+  .form-textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
+
+  /* ── INTERESTS TAGS ── */
+  .tags-group { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tag {
+    padding: 0.4rem 0.9rem;
+    border: 1px solid rgba(245,240,232,0.2);
+    border-radius: 999px;
+    font-size: 0.82rem; cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .tag:hover { border-color: var(--gold); color: var(--gold); }
+  .tag.selected { background: var(--gold); border-color: var(--gold); color: var(--ink); font-weight: 600; }
+
+  /* ── PROGRESS BAR ── */
+  .progress-wrap {
+    background: rgba(245,240,232,0.08);
+    border-radius: 999px;
+    height: 4px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--teal-light), var(--gold));
+    border-radius: 999px;
+    transition: width 0.5s ease;
+  }
+  .progress-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem; color: var(--muted);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── LOADING STATE ── */
+  .loading-wrap {
+    text-align: center; padding: 4rem 2rem;
+  }
+  .spinner {
+    width: 48px; height: 48px;
+    border: 3px solid rgba(212,168,67,0.2);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 1.5rem;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; margin-bottom: 0.5rem;
+  }
+  .loading-sub { color: rgba(245,240,232,0.5); font-size: 0.9rem; }
+
+  /* ── RESULTS CARD ── */
+  .result-hero {
+    background: linear-gradient(135deg, rgba(26,122,110,0.25), rgba(212,168,67,0.15));
+    border: 1px solid rgba(212,168,67,0.3);
+    border-radius: 6px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .result-hero::before {
+    content: '';
+    position: absolute; top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(212,168,67,0.15), transparent 70%);
+  }
+  .result-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: rgba(212,168,67,0.12);
+    border: 1px solid rgba(212,168,67,0.3);
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    display: inline-block;
+    margin-bottom: 1rem;
+  }
+  .result-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem; font-weight: 900;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.8rem;
+    line-height: 1.1;
+  }
+  .result-subtitle {
+    color: rgba(245,240,232,0.7);
+    font-size: 1rem; line-height: 1.6;
+    margin-bottom: 1.5rem;
+    max-width: 580px;
+  }
+  .match-score {
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .score-circle {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    border: 3px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .score-circle span {
+    font-family: 'Space Mono', monospace;
+    font-size: 1rem; font-weight: 700; color: var(--gold);
+  }
+  .score-label { font-size: 0.85rem; color: rgba(245,240,232,0.6); }
+  .score-label strong { color: var(--paper); display: block; font-size: 1rem; }
+
+  /* ── COURSE CARDS ── */
+  .courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .course-card {
+    background: rgba(245,240,232,0.04);
+    border: 1px solid rgba(245,240,232,0.1);
+    border-radius: 4px;
+    padding: 1.5rem;
+    transition: all 0.25s;
+  }
+  .course-card:hover { border-color: rgba(212,168,67,0.35); transform: translateY(-3px); }
+  .course-card.primary { border-color: rgba(212,168,67,0.5); background: rgba(212,168,67,0.07); }
+  .course-card .course-rank {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.1em;
+    color: var(--gold); margin-bottom: 0.6rem;
+  }
+  .course-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .course-card p { font-size: 0.82rem; color: rgba(245,240,232,0.55); line-height: 1.5; margin-bottom: 1rem; }
+  .course-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+  .course-tag {
+    font-size: 0.7rem; padding: 0.2rem 0.6rem;
+    background: rgba(245,240,232,0.07);
+    border-radius: 999px;
+    color: rgba(245,240,232,0.6);
+  }
+
+  /* ── ANALYSIS SECTION ── */
+  .analysis-box {
+    background: rgba(245,240,232,0.03);
+    border: 1px solid rgba(245,240,232,0.1);
+    border-left: 3px solid var(--teal-light);
+    border-radius: 0 4px 4px 0;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .analysis-box h4 {
+    font-size: 0.8rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--teal-light); margin-bottom: 0.8rem;
+  }
+  .analysis-box p, .analysis-box li {
+    font-size: 0.88rem; line-height: 1.65;
+    color: rgba(245,240,232,0.7);
+  }
+  .analysis-box ul { padding-left: 1.2rem; }
+  .analysis-box li { margin-bottom: 0.3rem; }
+
+  /* ── PHASE II FORM ── */
+  .phase2-form {
+    background: rgba(245,240,232,0.03);
+    border: 1px solid rgba(245,240,232,0.1);
+    border-radius: 6px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+  .marks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid rgba(245,240,232,0.08);
+    margin: 2rem 0;
+  }
+
+  /* ── COMBO CARD (Phase 2 college+course cards) ── */
+  .combo-card {
+    background: rgba(212,168,67,0.06);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 8px 8px 0;
+    padding: 1rem 1.2rem 0.9rem;
+    margin: 1rem 0 0.5rem;
+  }
+  .combo-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1.4;
+    margin-bottom: 0.7rem;
+  }
+  .combo-card ul {
+    padding-left: 1.1rem;
+    margin: 0;
+  }
+  .combo-card li {
+    font-size: 0.88rem;
+    color: rgba(245,240,232,0.82);
+    line-height: 1.75;
+    margin-bottom: 0.15rem;
+  }
+  .combo-divider {
+    border: none;
+    border-top: 1px solid rgba(212,168,67,0.15);
+    margin: 0.5rem 0;
+  }
+
+  /* ── AI RESPONSE STREAM ── */
+  #ai-stream-output, #ai-phase2-output {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: rgba(245,240,232,0.85);
+    white-space: pre-wrap;
+  }
+  #ai-stream-output strong, #ai-phase2-output strong {
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  /* ── FOOTER NAV ── */
+  .action-row {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+    margin-top: 2rem;
+  }
+  .action-row .hint {
+    font-size: 0.8rem; color: rgba(245,240,232,0.35);
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(212,168,67,0.3); border-radius: 3px; }
+
+  /* ── MANDATORY FIELD STYLES ── */
+  .required-star { color: var(--rose); margin-left: 3px; font-weight: 700; }
+  .form-input.error, .form-select.error { border-color: var(--rose) !important; background: rgba(196,92,74,0.07); }
+  .field-error {
+    color: var(--rose); font-size: 0.75rem;
+    margin-top: 0.3rem; display: none;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+  .field-error.visible { display: block; }
+  .error-banner {
+    background: rgba(196,92,74,0.12);
+    border: 1px solid rgba(196,92,74,0.4);
+    border-radius: 4px;
+    padding: 0.75rem 1.1rem;
+    color: #f0a090;
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+    display: none;
+  }
+  .error-banner.visible { display: block; }
+  .tags-error {
+    color: var(--rose); font-size: 0.75rem; margin-top: 0.5rem;
+    font-family: 'Space Mono', monospace; display: none;
+  }
+  .tags-error.visible { display: block; }
+
+  /* ── AI CHATBOT ── */
+  .chatbot-fab {
+    position: fixed; bottom: 2rem; right: 2rem;
+    width: 60px; height: 60px;
+    background: linear-gradient(135deg, var(--teal), var(--gold));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 9990;
+    box-shadow: 0 4px 20px rgba(212,168,67,0.4);
+    transition: all 0.25s;
+    border: none;
+    font-size: 1.5rem;
+  }
+  .chatbot-fab:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(212,168,67,0.55); }
+  .chatbot-fab .fab-badge {
+    position: absolute; top: -4px; right: -4px;
+    background: var(--rose); color: white;
+    font-size: 0.6rem; font-weight: 700;
+    width: 18px; height: 18px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Mono', monospace;
+  }
+  .chatbot-panel {
+    position: fixed; bottom: 6rem; right: 2rem;
+    width: 370px; max-width: calc(100vw - 2rem);
+    background: #12121e;
+    border: 1px solid rgba(212,168,67,0.3);
+    border-radius: 10px;
+    display: none; flex-direction: column;
+    z-index: 9989;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.6);
+    overflow: hidden;
+  }
+  .chatbot-panel.open { display: flex; }
+  .chatbot-header {
+    background: linear-gradient(135deg, var(--teal), rgba(26,122,110,0.6));
+    padding: 1rem 1.2rem;
+    display: flex; align-items: center; gap: 0.8rem;
+    border-bottom: 1px solid rgba(212,168,67,0.2);
+  }
+  .chatbot-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; flex-shrink: 0;
+  }
+  .chatbot-header-info { flex: 1; }
+  .chatbot-header-info strong { display: block; font-size: 0.9rem; color: var(--paper); }
+  .chatbot-header-info span { font-size: 0.72rem; color: rgba(245,240,232,0.55); }
+  .chatbot-close {
+    background: none; border: none; color: rgba(245,240,232,0.5);
+    cursor: pointer; font-size: 1.2rem; padding: 0;
+    transition: color 0.2s;
+  }
+  .chatbot-close:hover { color: var(--paper); }
+  .chatbot-messages {
+    flex: 1; overflow-y: auto;
+    padding: 1rem;
+    display: flex; flex-direction: column; gap: 0.8rem;
+    max-height: 340px; min-height: 200px;
+  }
+  .chat-msg {
+    max-width: 86%; padding: 0.65rem 0.9rem;
+    border-radius: 8px; font-size: 0.85rem; line-height: 1.55;
+  }
+  .chat-msg.bot {
+    background: rgba(245,240,232,0.07);
+    border: 1px solid rgba(245,240,232,0.1);
+    color: rgba(245,240,232,0.85);
+    align-self: flex-start;
+    border-bottom-left-radius: 2px;
+  }
+  .chat-msg.user {
+    background: rgba(212,168,67,0.18);
+    border: 1px solid rgba(212,168,67,0.3);
+    color: var(--paper);
+    align-self: flex-end;
+    border-bottom-right-radius: 2px;
+  }
+  .chat-msg.typing {
+    background: rgba(245,240,232,0.05);
+    border: 1px solid rgba(245,240,232,0.08);
+    align-self: flex-start;
+    color: rgba(245,240,232,0.4);
+    font-style: italic;
+    font-size: 0.8rem;
+  }
+  .chatbot-suggestions {
+    padding: 0.5rem 1rem;
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+    border-top: 1px solid rgba(245,240,232,0.06);
+  }
+  .chat-suggest {
+    font-size: 0.72rem; padding: 0.3rem 0.65rem;
+    background: rgba(245,240,232,0.06);
+    border: 1px solid rgba(245,240,232,0.15);
+    border-radius: 999px; cursor: pointer;
+    color: rgba(245,240,232,0.65);
+    transition: all 0.18s; white-space: nowrap;
+  }
+  .chat-suggest:hover { background: rgba(212,168,67,0.15); border-color: var(--gold); color: var(--gold); }
+  .chatbot-input-row {
+    display: flex; gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-top: 1px solid rgba(245,240,232,0.08);
+  }
+  .chatbot-input {
+    flex: 1;
+    background: rgba(245,240,232,0.06);
+    border: 1px solid rgba(245,240,232,0.15);
+    border-radius: 4px;
+    padding: 0.55rem 0.8rem;
+    color: var(--paper);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .chatbot-input:focus { border-color: var(--gold); }
+  .chatbot-send {
+    background: var(--gold); border: none; border-radius: 4px;
+    color: var(--ink); cursor: pointer;
+    padding: 0.55rem 0.9rem; font-size: 1rem;
+    transition: all 0.2s;
+  }
+  .chatbot-send:hover { background: var(--gold-light); }
+
+  /* ── STREAM TABS (Arts/Science) ── */
+  .stream-tabs {
+    display: flex; gap: 0.5rem; flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+  .stream-tab-btn {
+    padding: 0.5rem 1.1rem;
+    background: rgba(245,240,232,0.05);
+    border: 1px solid rgba(245,240,232,0.15);
+    border-radius: 999px;
+    cursor: pointer; font-size: 0.82rem;
+    color: rgba(245,240,232,0.6);
+    transition: all 0.2s;
+  }
+  .stream-tab-btn.active { background: var(--gold); border-color: var(--gold); color: var(--ink); font-weight: 700; }
+
+  .quiz-option { touch-action: manipulation; }
+  .tag { touch-action: manipulation; }
+  .btn-primary, .btn-secondary { touch-action: manipulation; }
+  .phase-tab { touch-action: manipulation; }
+  .stream-tab-btn { touch-action: manipulation; }
+  .chat-suggest { touch-action: manipulation; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 2.4rem; }
+    .btn-secondary { margin-left: 0; }
+    .marks-grid { grid-template-columns: 1fr 1fr; }
+    .chatbot-panel { bottom: 5rem; right: 0.5rem; width: calc(100vw - 1rem); }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">Career<span>Compass</span></div>
+  <div class="tagline">Post-12th Guidance System</div>
+</header>
+
+<!-- HERO -->
+<div class="hero" id="home-screen">
+  <div class="hero-eyebrow">✦ AI-Powered Career Discovery</div>
+  <h1>Find your <em>true</em><br>path after 12th</h1>
+  <p>Beyond MBBS &amp; B.Tech lies a universe of careers. Discover the course that fits <em>you</em> — your strengths, interests, and marks — not just what everyone else is doing.</p>
+  <button class="btn-primary" onclick="startAssessment()">Begin Free Assessment</button>
+  <button class="btn-secondary" onclick="skipToPhase2()">I have my course → Filter by marks</button>
+</div>
+
+<!-- PHASE TABS -->
+<div class="phases-nav" id="phases-nav" style="display:none;">
+  <button class="phase-tab active" id="tab1" onclick="switchPhase(1)">
+    <span class="phase-num">PHASE I</span>
+    Skills Assessment
+  </button>
+  <button class="phase-tab" id="tab2" onclick="switchPhase(2)">
+    <span class="phase-num">PHASE II</span>
+    Filter by Marks
+  </button>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="content-area">
+
+  <!-- ───────── PHASE I : STUDENT PROFILE ───────── -->
+  <div class="screen active" id="screen-profile">
+    <div class="progress-label">STEP 1 OF 4 — Student Profile</div>
+    <div class="progress-wrap"><div class="progress-bar" style="width:10%"></div></div>
+
+    <div class="section-title">Tell us about yourself</div>
+    <div class="section-subtitle">We'll personalise the assessment and recommendations based on your background. Fields marked <span style="color:#c45c4a">*</span> are required.</div>
+
+    <div id="profile-error-banner" class="error-banner">&#9888;&#65039; Please fill in all required fields before continuing.</div>
+
+    <div class="form-group">
+      <label class="form-label">Your Name <span class="required-star">*</span></label>
+      <input class="form-input" id="student-name" type="text" placeholder="e.g. Arjun Sharma"/>
+      <div class="field-error" id="err-name">Name is required.</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Stream in 12th <span class="required-star">*</span></label>
+      <select class="form-select" id="student-stream">
+        <option value="">— Select Stream —</option>
+        <option>Science (PCM)</option>
+        <option>Science (PCB)</option>
+        <option>Science (PCMB)</option>
+        <option>Commerce</option>
+        <option>Arts / Humanities</option>
+        <option>Vocational</option>
+      </select>
+      <div class="field-error" id="err-stream">Please select your stream.</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Approximate 12th Percentage <span class="required-star">*</span></label>
+      <input class="form-input" id="student-marks" type="number" min="0" max="100" step="0.01" placeholder="e.g. 82.5"/>
+      <div class="field-error" id="err-marks">Please enter a valid percentage (0 – 100).</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">State / Region <span class="required-star">*</span></label>
+      <input class="form-input" id="student-state" type="text" placeholder="e.g. Tamil Nadu, Maharashtra…"/>
+      <div class="field-error" id="err-state">State / region is required.</div>
+    </div>
+
+    <div class="action-row">
+      <span class="hint">All info stays in your browser session</span>
+      <button class="btn-primary" onclick="goToInterests()">Next: Interests &#8594;</button>
+    </div>
+  </div>
+
+  <!-- ───────── PHASE I : INTERESTS ───────── -->
+  <div class="screen" id="screen-interests">
+    <div class="progress-label">STEP 2 OF 4 — Personal Interests</div>
+    <div class="progress-wrap"><div class="progress-bar" style="width:35%"></div></div>
+
+    <div class="section-title">What sparks your curiosity?</div>
+    <div class="section-subtitle">Select every topic area that excites you. Don't overthink — go with your gut.</div>
+
+    <div class="form-group">
+      <label class="form-label">Interest Areas (select at least 1) <span class="required-star">*</span></label>
+      <div class="tags-group" id="interests-tags">
+        <span class="tag" onclick="toggleTag(this)">🔬 Science & Research</span>
+        <span class="tag" onclick="toggleTag(this)">💻 Computers & Technology</span>
+        <span class="tag" onclick="toggleTag(this)">🏥 Medicine & Healthcare</span>
+        <span class="tag" onclick="toggleTag(this)">🏗 Engineering & Construction</span>
+        <span class="tag" onclick="toggleTag(this)">🎨 Art & Design</span>
+        <span class="tag" onclick="toggleTag(this)">📷 Photography & Media</span>
+        <span class="tag" onclick="toggleTag(this)">✍️ Writing & Journalism</span>
+        <span class="tag" onclick="toggleTag(this)">🎭 Performing Arts</span>
+        <span class="tag" onclick="toggleTag(this)">🌿 Environment & Nature</span>
+        <span class="tag" onclick="toggleTag(this)">🌊 Marine & Ocean Studies</span>
+        <span class="tag" onclick="toggleTag(this)">🍔 Food & Nutrition</span>
+        <span class="tag" onclick="toggleTag(this)">✈ Aviation & Aerospace</span>
+        <span class="tag" onclick="toggleTag(this)">⚖ Law & Justice</span>
+        <span class="tag" onclick="toggleTag(this)">💰 Finance & Business</span>
+        <span class="tag" onclick="toggleTag(this)">🧠 Psychology & Counselling</span>
+        <span class="tag" onclick="toggleTag(this)">📚 Teaching & Education</span>
+        <span class="tag" onclick="toggleTag(this)">🌍 Social Work & NGO</span>
+        <span class="tag" onclick="toggleTag(this)">🏋 Sports & Fitness</span>
+        <span class="tag" onclick="toggleTag(this)">🏨 Hospitality & Tourism</span>
+        <span class="tag" onclick="toggleTag(this)">🔒 Defence & Security</span>
+        <span class="tag" onclick="toggleTag(this)">🌾 Agriculture & Farming</span>
+        <span class="tag" onclick="toggleTag(this)">⚗ Pharmacy & Drug Sciences</span>
+        <span class="tag" onclick="toggleTag(this)">🧬 Biotechnology & Genetics</span>
+        <span class="tag" onclick="toggleTag(this)">🏛 Architecture</span>
+      </div>
+      <div class="tags-error" id="err-interests">Please select at least one interest area.</div>
+    </div>
+
+    <div class="form-group" style="margin-top:1.5rem">
+      <label class="form-label">Anything else? Describe in your own words (optional)</label>
+      <textarea class="form-textarea" id="interest-text" placeholder="e.g. I love solving puzzles and tinkering with electronics. I also enjoy cooking…"></textarea>
+    </div>
+
+    <div class="action-row">
+      <button class="btn-secondary" onclick="goToScreen('screen-profile')">← Back</button>
+      <button class="btn-primary" onclick="goToSkills()">Next: Skills Test →</button>
+    </div>
+  </div>
+
+  <!-- ───────── PHASE I : SKILLS QUIZ ───────── -->
+  <div class="screen" id="screen-skills">
+    <div class="progress-label" id="quiz-progress-label">STEP 3 OF 4 — Skills Assessment · Question 1 of 50</div>
+    <div class="progress-wrap"><div class="progress-bar" id="quiz-progress-bar" style="width:30%"></div></div>
+
+    <div class="section-title" style="margin-bottom:0.4rem;">Skills Assessment</div>
+    <div class="section-subtitle" style="margin-bottom:1.2rem;">Answer honestly — your results depend on it. No right or wrong answers!</div>
+
+    <!-- skill progress dots (10 skills) -->
+    <div class="skill-dots" id="skill-dots"></div>
+
+    <!-- quiz card -->
+    <div class="quiz-shell" id="quiz-shell">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem;">
+        <div class="quiz-skill-badge" id="quiz-skill-badge" style="margin-bottom:0;">🧩 Logical Reasoning</div>
+        <div id="quiz-timer-wrap" style="display:none;align-items:center;gap:0.4rem;background:rgba(196,92,74,0.12);border:1px solid rgba(196,92,74,0.35);border-radius:999px;padding:0.25rem 0.8rem;">
+          <span style="font-size:0.9rem;">⏱</span>
+          <span id="quiz-timer-display" style="font-family:'Space Mono',monospace;font-size:0.8rem;font-weight:700;color:#f0a090;min-width:2.5rem;"></span>
+        </div>
+      </div>
+      <div class="quiz-qtype" id="quiz-qtype">MULTIPLE CHOICE</div>
+      <div id="quiz-passage-wrap" style="display:none;background:rgba(245,240,232,0.06);border-left:3px solid var(--teal-light);border-radius:0 4px 4px 0;padding:1rem 1.1rem;margin-bottom:1.2rem;font-size:0.9rem;line-height:1.7;color:rgba(245,240,232,0.82);" id="quiz-passage"></div>
+      <div class="quiz-question" id="quiz-question">Loading question…</div>
+      <div class="quiz-options" id="quiz-options"></div>
+      <!-- Text input for paragraph/open questions -->
+      <div id="quiz-text-input-wrap" style="display:none;margin-top:1rem;">
+        <textarea id="quiz-text-answer" class="form-textarea" placeholder="Write your answer here…" style="min-height:80px;" oninput="onTextAnswerInput()"></textarea>
+      </div>
+      <!-- Soft hint for no-limit skills -->
+      <div id="quiz-soft-hint" style="display:none;font-family:'Space Mono',monospace;font-size:0.7rem;color:rgba(245,240,232,0.35);letter-spacing:0.06em;margin-bottom:0.6rem;">&#128161; Most people finish this section in about 5 minutes &#8212; take your time.</div>
+      <!-- Memory recall sequence display -->
+      <div id="quiz-memory-display" style="display:none;text-align:center;padding:1.5rem 0;">
+        <div id="quiz-memory-items" style="display:flex;flex-wrap:wrap;gap:0.6rem;justify-content:center;margin-bottom:1rem;"></div>
+        <div id="quiz-memory-status" style="font-family:'Space Mono',monospace;font-size:0.78rem;color:var(--gold);letter-spacing:0.08em;"></div>
+      </div>
+      <!-- Distractor task for memory (shown between memorise and recall) -->
+      <div id="quiz-distractor-wrap" style="display:none;margin-top:1rem;">
+        <div style="background:rgba(26,122,110,0.15);border:1px solid rgba(45,179,160,0.3);border-radius:6px;padding:1rem 1.2rem;">
+          <div style="font-family:'Space Mono',monospace;font-size:0.68rem;color:var(--teal-light);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem;">&#128256; Distractor Task &#8212; keep your mind busy for 30 seconds</div>
+          <div id="quiz-distractor-q" style="font-size:0.95rem;color:var(--paper);margin-bottom:0.8rem;"></div>
+          <input id="quiz-distractor-input" class="form-input" type="text" placeholder="Type answer&#8230;" style="max-width:200px;" autocomplete="off"/>
+          <div id="quiz-distractor-timer" style="font-family:'Space Mono',monospace;font-size:0.78rem;color:rgba(245,240,232,0.4);margin-top:0.5rem;"></div>
+        </div>
+      </div>
+      <div class="quiz-nav">
+        <span class="quiz-counter" id="quiz-counter">1 / 50</span>
+        <button class="btn-primary" id="quiz-next-btn" onclick="quizNext()" style="display:none;">Next &#8594;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────── PHASE I : SKILLS SUMMARY ───────── -->
+  <div class="screen" id="screen-skills-summary">
+    <div class="progress-label">STEP 3 OF 4 — Skills Assessment Complete ✓</div>
+    <div class="progress-wrap"><div class="progress-bar" style="width:72%"></div></div>
+
+    <div class="section-title">Your Skill Profile</div>
+    <div class="section-subtitle">Here's how you scored across all 10 skill areas based on your answers.</div>
+
+    <div class="score-summary-grid" id="score-summary-grid"></div>
+
+    <div class="form-group">
+      <label class="form-label">Personality Style (pick one that fits best)</label>
+      <select class="form-select" id="personality">
+        <option value="">— Select —</option>
+        <option>Analytical — I love data, logic, and solving complex problems</option>
+        <option>Creative — I think visually and come up with original ideas</option>
+        <option>Social — I enjoy working with and helping people</option>
+        <option>Enterprising — I like leading, persuading, and taking risks</option>
+        <option>Conventional — I prefer structure, order, and clear processes</option>
+        <option>Investigative — I'm curious and love research and experimentation</option>
+      </select>
+    </div>
+
+    <div class="action-row">
+      <button class="btn-secondary" onclick="restartQuiz()">← Redo Quiz</button>
+      <button class="btn-primary" onclick="goToCareerGoals()">Next: Goals →</button>
+    </div>
+  </div>
+
+  <!-- ───────── PHASE I : CAREER GOALS ───────── -->
+  <div class="screen" id="screen-goals">
+    <div class="progress-label">STEP 4 OF 4 — Career Goals & Preferences</div>
+    <div class="progress-wrap"><div class="progress-bar" style="width:88%"></div></div>
+
+    <div id="goals-error-banner" class="error-banner">&#9888;&#65039; Please fill all required fields marked with *</div>
+    <div class="section-title">What matters most to you?</div>
+    <div class="section-subtitle">Your values shape your ideal career. Be honest — there are no wrong answers.</div>
+
+    <div class="form-group">
+      <label class="form-label">Primary career goal <span class="required-star">*</span></label>
+      <select class="form-select" id="career-goal">
+        <option value="">— Select —</option>
+        <option>High salary & financial stability</option>
+        <option>Making a positive impact on society</option>
+        <option>Creative freedom & expression</option>
+        <option>Job security & government employment</option>
+        <option>Starting my own business / entrepreneurship</option>
+        <option>Global opportunities & international career</option>
+        <option>Work-life balance & flexibility</option>
+        <option>Prestige & social recognition</option>
+      </select>
+      <div class="field-error" id="err-goal">Please select your primary career goal.</div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Preferred study duration <span class="required-star">*</span></label>
+      <select class="form-select" id="study-duration">
+        <option value="">— Select —</option>
+        <option>Short (diploma / 1-2 years)</option>
+        <option>Medium (3 year degree)</option>
+        <option>Standard (4 year B.E / B.Tech / MBBS equivalent)</option>
+        <option>Extended (5+ years including PG)</option>
+        <option>Open to anything</option>
+      </select>
+      <div class="field-error" id="err-duration">Please select preferred study duration.</div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Approximate annual fee budget (family's capacity) <span class="required-star">*</span></label>
+      <select class="form-select" id="fee-budget">
+        <option value="">— Select —</option>
+        <option>Under ₹50,000/year</option>
+        <option>₹50,000 – ₹1,50,000/year</option>
+        <option>₹1,50,000 – ₹5,00,000/year</option>
+        <option>₹5,00,000 – ₹15,00,000/year</option>
+        <option>No constraint</option>
+      </select>
+      <div class="field-error" id="err-fee">Please select your fee budget.</div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Anything else you want the AI to consider? (optional)</label>
+      <textarea class="form-textarea" id="extra-notes" placeholder="e.g. My parents prefer I stay in Tamil Nadu. I have a disability that limits physical work. I love animals…"></textarea>
+    </div>
+
+    <div class="action-row">
+      <button class="btn-secondary" onclick="goToScreen('screen-skills')">← Back</button>
+      <button class="btn-primary" onclick="generatePhase1()">✦ Analyse & Recommend →</button>
+    </div>
+  </div>
+
+  <!-- ───────── LOADING ───────── -->
+  <div class="screen" id="screen-loading">
+    <div class="loading-wrap">
+      <div class="spinner"></div>
+      <div class="loading-text">Analysing your profile…</div>
+      <div class="loading-sub" id="loading-status">Evaluating interests against 200+ courses</div>
+    </div>
+  </div>
+
+  <!-- ───────── PHASE I RESULTS ───────── -->
+  <div class="screen" id="screen-results">
+    <div class="result-badge">✦ Phase I Complete — Personalised Recommendations</div>
+
+    <div id="results-content">
+      <!-- dynamic -->
+    </div>
+
+    <hr class="divider"/>
+
+    <div class="section-title" style="font-size:1.4rem; margin-bottom:0.5rem;">Want to filter by your marks?</div>
+    <p style="color:rgba(245,240,232,0.55); font-size:0.9rem; margin-bottom:1.5rem;">Phase II uses your cutoff scores to verify eligibility and narrow down specific colleges &amp; programmes.</p>
+    <button class="btn-primary" onclick="switchPhase(2)">Continue to Phase II →</button>
+    <button class="btn-secondary" onclick="resetAll()" style="margin-left:1rem;">Start Over</button>
+  </div>
+
+  <!-- &#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473; PHASE II : MARKS FILTER &#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473;&#9473; -->
+  <div class="screen" id="screen-phase2">
+    <div class="section-title">Phase II &#8212; Eligibility Filter</div>
+    <div class="section-subtitle">Enter your marks / cutoff scores. We&#8217;ll cross-check eligibility and suggest courses &amp; colleges across <strong style="color:var(--gold)">Engineering, Arts &amp; Science, Commerce, and all streams</strong>.</div>
+
+    <!-- Stream Type Selector -->
+    <div class="stream-tabs" id="stream-type-tabs">
+      <button class="stream-tab-btn active" onclick="selectStreamType('engineering',this)">&#9881;&#65039; Engineering (TNEA)</button>
+      <button class="stream-tab-btn" onclick="selectStreamType('arts',this)">&#127912; Arts &amp; Science</button>
+      <button class="stream-tab-btn" onclick="selectStreamType('commerce',this)">&#128188; Commerce / BBA</button>
+      <button class="stream-tab-btn" onclick="selectStreamType('medical',this)">&#127973; Medical / Allied</button>
+      <button class="stream-tab-btn" onclick="selectStreamType('other',this)">&#128218; Other / Open</button>
+    </div>
+
+    <input type="hidden" id="selected-stream-type" value="engineering"/>
+
+    <div class="phase2-form">
+      <!-- Common Fields -->
+      <div class="marks-grid">
+        <div class="form-group">
+          <label class="form-label">12th Overall % <span class="required-star">*</span></label>
+          <input class="form-input" id="p2-overall" type="number" placeholder="82" min="0" max="100"/>
+          <div class="field-error" id="err-p2-overall">Overall percentage is required.</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Category <span class="required-star">*</span></label>
+          <select class="form-select" id="p2-category">
+            <option value="">&#8212; Select &#8212;</option>
+            <option>General / OC</option>
+            <option>BC</option>
+            <option>MBC</option>
+            <option>OBC</option>
+            <option>SC</option>
+            <option>ST</option>
+            <option>EWS</option>
+            <option>BCM</option>
+            <option>SCA</option>
+          </select>
+          <div class="field-error" id="err-p2-cat">Please select your category.</div>
+        </div>
+      </div>
+
+      <!-- Engineering Fields -->
+      <div id="eng-fields">
+        <p style="font-size:0.8rem;color:var(--gold);margin-bottom:1rem;font-family:'Space Mono',monospace;">&#9881;&#65039; TNEA CUTOFF DATA (tneacutoff.com) &#8212; Anna University &amp; affiliated colleges</p>
+        <div class="marks-grid">
+          <div class="form-group">
+            <label class="form-label">Physics % <span class="required-star">*</span></label>
+            <input class="form-input" id="p2-physics" type="number" placeholder="75" min="0" max="100"/>
+            <div class="field-error" id="err-p2-physics">Physics % is required for TNEA cutoff.</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Chemistry % <span class="required-star">*</span></label>
+            <input class="form-input" id="p2-chemistry" type="number" placeholder="80" min="0" max="100"/>
+            <div class="field-error" id="err-p2-chemistry">Chemistry % is required for TNEA cutoff.</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Maths % <span class="required-star">*</span></label>
+            <input class="form-input" id="p2-mathbio" type="number" placeholder="88" min="0" max="100"/>
+            <div class="field-error" id="err-p2-maths">Maths % is required for TNEA cutoff.</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">JEE Main Percentile <span style="color:var(--muted);font-size:0.75rem;">(optional)</span></label>
+            <input class="form-input" id="p2-jee" type="number" placeholder="optional" min="0" max="100"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">State CET Rank <span style="color:var(--muted);font-size:0.75rem;">(optional)</span></label>
+            <input class="form-input" id="p2-cet" type="text" placeholder="optional"/>
+          </div>
+        </div>
+        <p style="font-size:0.75rem;color:rgba(245,240,232,0.4);margin-top:0.5rem;">TNEA Cutoff = Maths&#215;1 + Physics&#215;0.5 + Chemistry&#215;0.5 (out of 200). Enter subject % scored out of 100.</p>
+      </div>
+
+      <!-- Arts & Science Fields -->
+      <div id="arts-fields" style="display:none">
+        <p style="font-size:0.8rem;color:var(--gold);margin-bottom:1rem;font-family:'Space Mono',monospace;">&#127912; ARTS, SCIENCE &amp; GENERAL DEGREE STREAMS</p>
+        <div class="marks-grid">
+          <div class="form-group">
+            <label class="form-label">Language (Tamil/English) % <span class="required-star">*</span></label>
+            <input class="form-input" id="p2-language" type="number" placeholder="85" min="0" max="100"/>
+            <div class="field-error" id="err-p2-language">Language % is required.</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Main Subject 1 % <span class="required-star">*</span></label>
+            <input class="form-input" id="p2-sub1" type="number" placeholder="e.g. 88" min="0" max="100"/>
+            <div class="field-error" id="err-p2-sub1">Subject 1 % is required.</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Main Subject 2 % <span class="required-star">*</span></label>
+            <input class="form-input" id="p2-sub2" type="number" placeholder="e.g. 82" min="0" max="100"/>
+            <div class="field-error" id="err-p2-sub2">Subject 2 % is required.</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Main Subject 3 % <span style="color:var(--muted);font-size:0.75rem;">(optional)</span></label>
+            <input class="form-input" id="p2-sub3" type="number" placeholder="optional" min="0" max="100"/>
+          </div>
+        </div>
+        <div class="form-group" style="margin-top:0.5rem">
+          <label class="form-label">Subjects studied in 12th <span class="required-star">*</span></label>
+          <input class="form-input" id="p2-arts-subjects" type="text" placeholder="e.g. History, Economics, Political Science, English&#8230;"/>
+          <div class="field-error" id="err-p2-arts-subjects">Please enter your subjects.</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Interested Degree <span style="color:var(--muted);font-size:0.75rem;">(optional)</span></label>
+          <select class="form-select" id="p2-arts-degree">
+            <option value="">&#8212; Select &#8212;</option>
+            <option>B.A. (Bachelor of Arts)</option>
+            <option>B.Sc. (Bachelor of Science)</option>
+            <option>B.Com (Bachelor of Commerce)</option>
+            <option>B.Litt / B.A. Languages</option>
+            <option>B.Soc.Sci / Social Work</option>
+            <option>B.Sc. Nursing / Allied Health</option>
+            <option>BCA / B.Sc. Computer Science</option>
+            <option>Open to all options</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Entrance Exams Appeared <span style="color:var(--muted);font-size:0.75rem;">(optional)</span></label>
+          <input class="form-input" id="p2-arts-entrance" type="text" placeholder="e.g. TANCET, CUET, NATA, CLAT, NID&#8230; or None"/>
+        </div>
+      </div>
+
+      <!-- Commerce Fields -->
+      <div id="commerce-fields" style="display:none">
+        <p style="font-size:0.8rem;color:var(--gold);margin-bottom:1rem;font-family:'Space Mono',monospace;">&#128188; COMMERCE / BBA / CA / LAW STREAMS</p>
+        <div class="marks-grid">
+          <div class="form-group">
+            <label class="form-label">Accountancy % <span class="required-star">*</span></label>
+            <input class="form-input" id="p2-accounts" type="number" placeholder="88" min="0" max="100"/>
+            <div class="field-error" id="err-p2-accounts">Accountancy % is required.</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Business Studies % <span class="required-star">*</span></label>
+            <input class="form-input" id="p2-bst" type="number" placeholder="82" min="0" max="100"/>
+            <div class="field-error" id="err-p2-bst">Business Studies % is required.</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Economics % <span class="required-star">*</span></label>
+            <input class="form-input" id="p2-eco" type="number" placeholder="79" min="0" max="100"/>
+            <div class="field-error" id="err-p2-eco">Economics % is required.</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Maths % <span style="color:var(--muted);font-size:0.75rem;">(if taken, optional)</span></label>
+            <input class="form-input" id="p2-comm-maths" type="number" placeholder="optional" min="0" max="100"/>
+          </div>
+        </div>
+        <div class="form-group" style="margin-top:0.5rem">
+          <label class="form-label">Interested Degree <span style="color:var(--muted);font-size:0.75rem;">(optional)</span></label>
+          <select class="form-select" id="p2-comm-degree">
+            <option value="">&#8212; Select &#8212;</option>
+            <option>B.Com (General)</option>
+            <option>B.Com (Hons)</option>
+            <option>BBA / BBM</option>
+            <option>CA Foundation</option>
+            <option>B.A. Economics</option>
+            <option>BMS / B.Com (Banking)</option>
+            <option>Integrated Law (5 yr BA LLB)</option>
+            <option>Open to suggestions</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Medical Fields -->
+      <div id="medical-fields" style="display:none">
+        <p style="font-size:0.8rem;color:var(--gold);margin-bottom:1rem;font-family:'Space Mono',monospace;">&#127973; MEDICAL / NURSING / ALLIED HEALTH SCIENCES</p>
+        <div class="marks-grid">
+          <div class="form-group">
+            <label class="form-label">Biology % <span class="required-star">*</span></label>
+            <input class="form-input" id="p2-bio" type="number" placeholder="90" min="0" max="100"/>
+            <div class="field-error" id="err-p2-bio">Biology % is required.</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Chemistry % <span class="required-star">*</span></label>
+            <input class="form-input" id="p2-chem2" type="number" placeholder="85" min="0" max="100"/>
+            <div class="field-error" id="err-p2-chem2">Chemistry % is required.</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Physics % <span class="required-star">*</span></label>
+            <input class="form-input" id="p2-phy2" type="number" placeholder="80" min="0" max="100"/>
+            <div class="field-error" id="err-p2-phy2">Physics % is required.</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">NEET Score <span style="color:var(--muted);font-size:0.75rem;">(optional)</span></label>
+            <input class="form-input" id="p2-neet" type="number" placeholder="optional" min="0" max="720"/>
+          </div>
+        </div>
+        <div class="form-group" style="margin-top:0.5rem">
+          <label class="form-label">Interested Degree <span style="color:var(--muted);font-size:0.75rem;">(optional)</span></label>
+          <select class="form-select" id="p2-med-degree">
+            <option value="">&#8212; Select &#8212;</option>
+            <option>MBBS</option>
+            <option>BDS (Dentistry)</option>
+            <option>B.Pharm</option>
+            <option>B.Sc Nursing</option>
+            <option>BAMS / BHMS (Ayurveda / Homeopathy)</option>
+            <option>Allied Health Sciences (Physiotherapy, Optometry&#8230;)</option>
+            <option>B.Sc Food Technology / Nutrition</option>
+            <option>Veterinary Science (B.V.Sc)</option>
+            <option>Open to all medical fields</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Common bottom fields -->
+      <div class="form-group" style="margin-top:1rem">
+        <label class="form-label">Preferred course type (from Phase I or your own choice)</label>
+        <input class="form-input" id="p2-course-pref" type="text" placeholder="e.g. Computer Science, Food Technology, Psychology, B.Com&#8230;"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Preferred district for college (Tamil Nadu)</label>
+        <input class="form-input" id="p2-location" type="text" autocomplete="off"
+          placeholder="e.g. Chennai, Coimbatore, Madurai..."/>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="generatePhase2()">&#10022; Check Eligibility &amp; Find Colleges &#8594;</button>
+  </div>
+
+  <!-- PHASE II LOADING -->
+  <div class="screen" id="screen-loading2">
+    <div class="loading-wrap">
+      <div class="spinner"></div>
+      <div class="loading-text">Matching courses to your marks…</div>
+      <div class="loading-sub">Checking eligibility criteria across programmes</div>
+    </div>
+  </div>
+
+  <!-- ───────── PHASE II RESULTS ───────── -->
+  <div class="screen" id="screen-results2">
+    <div class="result-badge">✦ Phase II Complete — Eligibility & College Recommendations</div>
+    <div id="results2-content"></div>
+    <hr class="divider"/>
+
+    <button class="btn-secondary" onclick="switchPhase(2)">← Refine Marks</button>
+    <button class="btn-secondary" onclick="resetAll()" style="margin-left:1rem;">Start Over</button>
+  </div>
+
+</div><!-- /content-area -->
+
+<script>
+// ── STATE ──
+let state = {
+  name: '', stream: '', marks: '', state: '',
+  interests: [], interestText: '',
+  skills: {}, personality: '',
+  careerGoal: '', studyDuration: '', feeBudget: '', extraNotes: '',
+  phase1Result: ''
+};
+
+// ── QUIZ SPEC (from PDF) ──
+// Logical:6 Verbal:6 Numerical:6 Spatial:5 Creative:3 EI:5 Leadership:5 Technical:5 Research:4 Memory:5 = 50
+// Per-question timers: Logical 90s, Verbal 60s, Numerical 45s, Spatial 75s, Technical 120s, Memory built-in
+// No-limit (soft hint): Creative, EI, Leadership, Research
+
+// CAT question pools — 3 difficulty levels per skill: easy(0), medium(1), hard(2)
+// Each question: { d: difficulty, type, q, options, answer } or PARAGRAPH/MEMORY type
+const QUESTION_POOLS = {
+  logical: [
+    // Easy
+    { d:0, type:'MCQ', q:'What comes next? 2, 4, 8, 16, __', options:['24','32','30','20'], answer:1 },
+    { d:0, type:'MCQ', q:'Which is the odd one out? Cat, Dog, Rose, Tiger', options:['Cat','Dog','Rose','Tiger'], answer:2 },
+    { d:0, type:'MCQ', q:'If today is Monday, what day is it 5 days later?', options:['Thursday','Friday','Saturday','Sunday'], answer:2 },
+    // Medium
+    { d:1, type:'MCQ', q:'All Mangoes are Fruits. All Fruits are Healthy. Therefore:', options:['Some mangoes are not healthy','All mangoes are healthy','Some fruits are not mangoes','None of the above'], answer:1 },
+    { d:1, type:'MCQ', q:'If A = 1, B = 2, C = 3, what is the value of CAB?', options:['312','321','123','213'], answer:0 },
+    { d:1, type:'MCQ', q:'In a row, Ravi is 7th from the left and 5th from the right. How many people are in the row?', options:['10','11','12','13'], answer:1 },
+    { d:1, type:'MCQ', q:'A train leaves at 8:00 AM at 90 km/h. Another leaves at 9:00 AM at 120 km/h on the same route. When does the second catch the first?', options:['11:00 AM','11:30 AM','12:00 PM','10:30 AM'], answer:0 },
+    { d:1, type:'SCENARIO', q:'A code traces: x=3, if x>2 then x=x*2, if x>4 then x=x+1. What is x at the end?', options:['6','7','5','8'], answer:1 },
+    // Hard
+    { d:2, type:'MCQ', q:'Some doctors are engineers. All engineers are honest. Which must be true?', options:['All doctors are honest','Some doctors are honest','No doctor is honest','All honest people are doctors'], answer:1 },
+    { d:2, type:'MCQ', q:'A number when divided by 6 leaves remainder 3, and when divided by 9 leaves remainder 6. The smallest such number is:', options:['15','21','24','33'], answer:0 },
+    { d:2, type:'SCENARIO', q:'x=5, y=2, loop runs while x>y: x=x-1, y=y+1. How many times does the loop run?', options:['1','2','3','4'], answer:0 },
+    { d:2, type:'MCQ', q:'In a truth table: P=T, Q=F. What is (P AND Q) OR (NOT P)?', options:['True','False','Undefined','Depends on context'], answer:1 },
+  ],
+  verbal: [
+    { d:0, type:'MCQ', q:'Choose the synonym of "Diligent":', options:['Lazy','Hardworking','Clever','Honest'], answer:1 },
+    { d:0, type:'MCQ', q:'Which sentence is grammatically correct?', options:["She don't like it","She doesn't likes it","She doesn't like it","She not like it"], answer:2 },
+    { d:0, type:'MCQ', q:'"Burning the midnight oil" means:', options:['Wasting electricity','Starting a fire','Working late into the night','Being very angry'], answer:2 },
+    { d:1, type:'PASSAGE', passage:'The internet has transformed how we learn. Students today can access lectures from universities across the world at no cost. However, not every student has reliable internet or a quiet place to study. This digital divide means that the benefits of online education are not equally shared.', q:'What is the main concern raised in this passage?', options:['Online education is of poor quality','Internet access is too expensive','Not all students can equally benefit from online learning','Universities are losing students to online platforms'], answer:2 },
+    { d:1, type:'MCQ', q:'"Doctor is to Hospital as Teacher is to ___"', options:['Book','Student','School','Lesson'], answer:2 },
+    { d:1, type:'MCQ', q:'Identify the error: "Neither the students nor the teacher were present at the meeting."', options:['students','nor','teacher','were'], answer:3 },
+    { d:1, type:'PASSAGE', passage:'Plastics have revolutionised packaging, medicine, and construction. Yet a majority of plastic produced is single-use and ends up in landfills or oceans. Scientists warn that microplastics are now found in human blood. Governments are under pressure to regulate plastic production, but industry lobbying has slowed legislation.', q:'Which inference is best supported by the passage?', options:['Plastic should be banned immediately','Industrial interests may influence the pace of plastic regulation','Plastics are more harmful than beneficial','Scientists have found a way to remove microplastics from blood'], answer:1 },
+    // Hard
+    { d:2, type:'MCQ', q:'Choose the antonym of "Laconic":', options:['Brief','Verbose','Silent','Concise'], answer:1 },
+    { d:2, type:'PASSAGE', passage:'Critics of standardised testing argue that such tests measure how well students can memorise and recall under pressure, not genuine understanding or creativity. Proponents counter that standardised tests provide an objective measure that is not influenced by a teacher\'s personal bias. Both sides agree that preparation and access to coaching plays a major role in scores.', q:'What do both sides in the debate agree upon?', options:['Standardised tests are fair','Coaching affects test results','Creative thinking is more important than memory','Teachers are biased graders'], answer:1 },
+    { d:2, type:'MCQ', q:'Rewrite for conciseness: "Due to the fact that it was raining, she decided to stay indoors." The best concise version is:', options:['Because it rained, she stayed indoors.','Since it was raining heavily, she had decided to remain inside.','She stayed in due to rain.','She decided that because of the rain she would not go out.'], answer:0 },
+  ],
+  numerical: [
+    { d:0, type:'MCQ', q:'A bag costs ₹600. A 25% discount is applied. What is the sale price?', options:['₹400','₹450','₹475','₹500'], answer:1 },
+    { d:0, type:'MCQ', q:'What is 15% of 200?', options:['25','30','35','40'], answer:1 },
+    { d:0, type:'MCQ', q:'A journey takes 2 hours at 60 km/h. How long at 80 km/h?', options:['1.5 hours','1 hour','1.25 hours','2.5 hours'], answer:0 },
+    { d:1, type:'MCQ', q:'6 workers finish a task in 10 days. How many days for 4 workers?', options:['12','15','8','20'], answer:1 },
+    { d:1, type:'MCQ', q:'A class of 30 scored an average of 70. If 10 more students join with an average of 80, what is the new class average?', options:['73.5','73','74','75'], answer:0 },
+    { d:1, type:'MCQ', q:'From the data: sales were ₹50k (Jan), ₹70k (Feb), ₹60k (Mar). What was the average monthly sales?', options:['₹55,000','₹60,000','₹65,000','₹70,000'], answer:1 },
+    { d:1, type:'SCENARIO', q:'Class collected ₹5,000. Spent ₹2,000 on food, ₹1,200 on decoration, ₹600 on gifts. How much remains?', options:['₹1,200','₹1,400','₹1,000','₹1,800'], answer:0 },
+    // Hard
+    { d:2, type:'MCQ', q:'A product price increased 20% then decreased 20%. Net change is:', options:['0%','−4%','+4%','−2%'], answer:1 },
+    { d:2, type:'MCQ', q:'Estimate without a calculator: 498 × 202 ≈', options:['100,000','98,000','100,596','95,000'], answer:2 },
+    { d:2, type:'MCQ', q:'Convert: if 1 inch = 2.54 cm, how many inches is 127 cm?', options:['40','50','55','60'], answer:1 },
+  ],
+  spatial: [
+    { d:0, type:'MCQ', q:'A square paper is folded in half twice. A hole is punched in the center. How many holes when fully unfolded?', options:['1','2','4','8'], answer:2 },
+    { d:0, type:'SCENARIO', q:'You face North and turn 90° clockwise, then 180° anticlockwise. Which direction do you now face?', options:['North','South','East','West'], answer:3 },
+    { d:1, type:'SCENARIO', q:'A cube is painted red on all faces, then cut into 27 equal smaller cubes. How many small cubes have exactly 2 red faces?', options:['8','12','6','4'], answer:1 },
+    { d:1, type:'SCENARIO', q:'A net has a cross shape with 6 squares. When folded into a cube, the top and bottom faces are identified. How many faces are sides?', options:['2','4','6','3'], answer:1 },
+    { d:1, type:'SCENARIO', q:'You are at point A. Walk 5m North, then 3m East, then 5m South. How far are you from A?', options:['3m','5m','8m','13m'], answer:0 },
+    // Hard
+    { d:2, type:'SCENARIO', q:'A 3D figure is viewed from the top: it looks like a T-shape. From the front: a rectangle. From the side: a small square. What is the most likely shape?', options:['L-shaped prism','T-shaped prism','Cube','Cylinder'], answer:1 },
+    { d:2, type:'SCENARIO', q:'A pattern block grid has a hexagon in the center. Triangles tile the gaps. If 6 triangles surround 1 hexagon and you have 3 hexagons in a row touching, how many triangles are needed to fill all gaps on the outer edge?', options:['12','14','16','18'], answer:1 },
+  ],
+  creative: [
+    {
+      type: 'DIVERGENT',
+      q: '⏱ You have 2 minutes. List as many different uses as you can think of for a wooden pencil — apart from writing. Be creative and specific! (Write one use per line)',
+      scoringHint: 'fluency_originality',
+      noLimit: true
+    },
+    {
+      type: 'PARAGRAPH',
+      passage: 'A small town has only one water tap for 200 families. The municipal office says a new pipeline will take 6 months. Children miss school. Workers reach late. Elders struggle.',
+      q: 'If you were a student leader, describe ONE creative solution to manage the water shortage until the pipeline arrives. What would you do, and how would it help?',
+      scoringHint: 'novel_idea',
+      noLimit: true
+    },
+    {
+      type: 'PARAGRAPH',
+      passage: 'Your school holds a Science Day exhibition. This year\'s theme is "Technology for Rural India." Most students plan poster displays. You have ₹1,500 and 3 volunteers.',
+      q: 'Describe a unique, hands-on project idea that would stand out. Explain what it does, how you\'d build it with that budget, and who it helps.',
+      scoringHint: 'innovation',
+      noLimit: true
+    },
+  ],
+  emotional: [
+    { d:0, type:'SCENARIO', q:'Your best friend failed the board exam and is very upset. You have already passed. What do you do first?', options:['"I told you to study harder"','Sit with them and listen without judging','Immediately give them a new study plan','Avoid them so they don\'t feel worse'], answer:1 },
+    { d:0, type:'SCENARIO', q:'Two friends fight and both ask you to pick a side. You:', options:['Side with whoever you like more','Listen to both and encourage them to talk it out','Tell both to leave you out','Share it on your WhatsApp status'], answer:1 },
+    { d:1, type:'MCQ', q:'What does "empathy" mean?', options:['Feeling sorry for someone','Understanding another\'s feelings from their point of view','Agreeing with everything someone says','Helping someone financially'], answer:1 },
+    { d:1, type:'SCENARIO', q:'You are presenting in class and a peer interrupts you repeatedly. You feel frustrated. The best response is:', options:['Shout at them to stop','Pause, calmly say "let me finish and then you can share", and continue','Immediately sit down and refuse to continue','Complain to the teacher mid-presentation'], answer:1 },
+    { d:2, type:'SCENARIO', q:'A teacher publicly criticises your project in front of the class in a way that felt unfair. After class you:', options:['Ignore it and say nothing','Vent angrily on social media','Calmly approach the teacher privately and ask for specific feedback','Tell your friends the teacher is unfair and get them to protest'], answer:2 },
+  ],
+  leadership: [
+    { d:0, type:'SCENARIO', q:'You are class leader for cultural fest. One student never shows up to practice. You:', options:['Complain about them publicly','Talk to them privately and find a role that suits them','Do all their work yourself','Tell the teacher to remove them immediately'], answer:1 },
+    { d:0, type:'MCQ', q:'A good leader facing team failure should first:', options:['Blame the weakest member','Take responsibility and help the team learn','Pretend nothing happened','Quit the leadership role'], answer:1 },
+    { d:1, type:'SCENARIO', q:'Your team wins the inter-school quiz. The principal congratulates you as captain. You say:', options:['"Thank you — I worked really hard!"','"This was a team win. Everyone played their part!"','Nothing — look away.','Say it was mostly luck'], answer:1 },
+    { d:1, type:'SCENARIO', q:'During a group project, two members strongly disagree on the approach and the group is stuck. As the project lead, you:', options:['Pick the approach you like best and move on','Let them fight it out — the stronger argument will win','Facilitate a 10-minute structured discussion, list pros and cons of each approach, and seek consensus','Escalate to the teacher immediately'], answer:2 },
+    { d:2, type:'SCENARIO', q:'Halfway through an event you organised, the main speaker cancels. The audience is seated. You:', options:['Cancel the event and apologise','Panic and blame the organising team','Quickly restructure — open a Q&A, invite another speaker, or run a group activity, and keep the audience engaged','Ask the audience to wait and disappear backstage'], answer:2 },
+  ],
+  technical: [
+    { d:0, type:'SCENARIO', q:'Your laptop stops charging. You first:', options:['Buy a new charger','Check the cable, socket, and try a different outlet','Give it to a repair shop','Accept it and use mobile'], answer:1 },
+    { d:0, type:'MCQ', q:'Which is an INPUT device?', options:['Monitor','Printer','Keyboard','Speaker'], answer:2 },
+    { d:0, type:'MCQ', q:'Ctrl + Z in most programs:', options:['Saves the file','Undoes the last action','Closes the program','Copies selected text'], answer:1 },
+    { d:1, type:'SCENARIO', q:'A circuit has a battery, a switch, and a bulb in series. The switch is open. The bulb:', options:['Glows brightly','Glows dimly','Does not glow','Short circuits'], answer:2 },
+    { d:1, type:'MCQ', q:'In a flowchart, a diamond shape represents:', options:['Start/End','A process step','A decision / condition','Data input'], answer:2 },
+    // Hard
+    { d:2, type:'SCENARIO', q:'Code: for i in range(3): print(i*2). What does it print?', options:['0 2 4','1 2 3','0 1 2','2 4 6'], answer:0 },
+    { d:2, type:'SCENARIO', q:'A schematic shows two resistors R1=10Ω and R2=10Ω in parallel with a 10V battery. Total current from the battery is:', options:['0.5A','1A','2A','5A'], answer:2 },
+  ],
+  research: [
+    {
+      type: 'PARAGRAPH',
+      passage: '📱 Statement A (School Principal, 2024): "Smartphones distract students. We banned them and exam scores improved 15%."\n\n📱 Statement B (Tech Educator, 2024): "Smartphones are learning tools. Banning them widens the digital divide."',
+      q: 'Both claims cite evidence. What conclusion would you draw, and what additional information would you need before making a final decision? (3–5 sentences)',
+      scoringHint: 'critical_analysis',
+      noLimit: true
+    },
+    {
+      type: 'PARAGRAPH',
+      passage: 'You are researching "Air Pollution in Indian Cities." Sources available:\n• Source 1: 2019 blog post, unknown author\n• Source 2: 2024 report by India\'s Central Pollution Control Board (CPCB)\n• Source 3: 2023 peer-reviewed journal article in Environmental Science',
+      q: 'Rank these sources from most to least reliable. Justify your ranking and explain which you would cite in your project.',
+      scoringHint: 'source_ranking',
+      noLimit: true
+    },
+    {
+      type: 'PARAGRAPH',
+      passage: 'A classmate sends a WhatsApp message: "BREAKING: Scientists prove drinking hot water cures all fevers. Share immediately!" It has 1,200 forwards and a blurry screenshot.',
+      q: 'List the red flags that make this message unreliable. How would you verify it before sharing? Name at least two specific steps.',
+      scoringHint: 'source_evaluation',
+      noLimit: true
+    },
+    {
+      type: 'PARAGRAPH',
+      passage: 'Data from a class survey: 60% of students sleep less than 6 hours on school nights. Of those, 75% report difficulty concentrating in morning classes. The survey had 40 respondents.',
+      q: 'Write a 3–4 sentence analytical summary of what this data tells you. What are the limitations of this dataset? What would you need to make a stronger conclusion?',
+      scoringHint: 'data_analysis',
+      noLimit: true
+    },
+  ],
+  memory: [
+    // Q1: Digit span (forward)
+    {
+      type: 'MEMORY_SEQUENCE',
+      label: 'Digit Span — Forward',
+      sequence: ['8','3','6','1','9','4','2'],
+      showSeconds: 8,
+      q: 'What was the digit sequence you just saw?',
+      options: ['8 → 3 → 6 → 1 → 9 → 4 → 2','3 → 8 → 6 → 9 → 1 → 4 → 2','8 → 6 → 3 → 9 → 4 → 1 → 2','8 → 3 → 1 → 6 → 9 → 2 → 4'],
+      answer: 0
+    },
+    // Q2: Digit span (backward)
+    {
+      type: 'MEMORY_SEQUENCE',
+      label: 'Digit Span — Backward',
+      sequence: ['5','2','9','7'],
+      showSeconds: 6,
+      q: 'Now recall the sequence in REVERSE order (last digit first):',
+      options: ['7 → 9 → 2 → 5','5 → 2 → 9 → 7','9 → 7 → 5 → 2','2 → 9 → 7 → 5'],
+      answer: 0
+    },
+    // Q3: Delayed recall (paragraph + distractor + recall)
+    {
+      type: 'MEMORY_STORY',
+      label: 'Delayed Recall',
+      story: 'Arjun, a 17-year-old from Coimbatore, scored 97% in Mathematics in his Class 12 board exam. He is interested in Aerospace Engineering and has applied to IIT Madras and VIT Vellore. His favourite subject apart from Maths is Physics. He won the district-level Science Olympiad in 2024.',
+      showSeconds: 15,
+      distractorSeconds: 30,
+      q: 'Answer from memory (passage is hidden). What did Arjun win, and what two colleges did he apply to?',
+      options: [
+        'District Science Olympiad — IIT Madras and VIT Vellore',
+        'National Maths Quiz — IIT Bombay and NIT Trichy',
+        'District Science Olympiad — IIT Madras and BITS Pilani',
+        'State Science Fair — Anna University and VIT Vellore'
+      ],
+      answer: 0
+    },
+    // Q4: Paired-associate learning
+    {
+      type: 'MEMORY_PAIRS',
+      label: 'Word Pair Recall',
+      pairs: [['Moon','Silver'],['River','Song'],['Clock','Amber'],['Forest','Ink']],
+      showSeconds: 12,
+      q: 'What word was paired with "River"?',
+      options: ['Silver','Song','Amber','Ink'],
+      answer: 1
+    },
+    // Q5: Item recall (multi-select)
+    {
+      type: 'MEMORY_RECALL',
+      label: 'Item Recall',
+      memoryItems: ['🍎 Apple','🚂 Train','🌙 Moon','📚 Book','🐬 Dolphin','🔑 Key'],
+      showSeconds: 8,
+      distractorSeconds: 30,
+      q: 'Which items were in the list? Select all that apply.',
+      allOptions: ['🍎 Apple','🚂 Train','🌙 Moon','📚 Book','🐬 Dolphin','🔑 Key','🌺 Flower','⚽ Ball','🎸 Guitar'],
+      correctSet: [0,1,2,3,4,5]
+    },
+  ]
+};
+
+// ── CAT ENGINE: Build question sequence adaptively ──
+// Per-skill question counts from PDF
+const SKILL_Q_COUNTS = {
+  logical:6, verbal:6, numerical:6, spatial:5, creative:3,
+  emotional:5, leadership:5, technical:5, research:4, memory:5
+};
+
+// Timed skills: seconds per question (null = no timer / soft hint)
+const SKILL_TIMERS = {
+  logical:90, verbal:60, numerical:45, spatial:75, creative:null,
+  emotional:null, leadership:null, technical:120, research:null, memory:null
+};
+
+const SKILL_SOFT_HINT = { creative:true, emotional:true, leadership:true, research:true };
+
+// Skill order
+const SKILL_ORDER = ['logical','verbal','numerical','spatial','creative','emotional','leadership','technical','research','memory'];
+
+const SKILL_META = {
+  logical:   { icon:'🧩', name:'Logical Reasoning' },
+  verbal:    { icon:'💬', name:'Verbal & Language' },
+  numerical: { icon:'🔢', name:'Numerical Ability' },
+  spatial:   { icon:'📐', name:'Spatial Thinking' },
+  creative:  { icon:'🎨', name:'Creative Thinking' },
+  emotional: { icon:'❤️', name:'Emotional Intelligence' },
+  leadership:{ icon:'🎯', name:'Leadership' },
+  technical: { icon:'⚙️', name:'Technical Aptitude' },
+  research:  { icon:'🔍', name:'Research & Analysis' },
+  memory:    { icon:'🧠', name:'Memory & Retention' },
+};
+
+// Build QUIZ_DATA dynamically using CAT selection
+function buildCATQuizData() {
+  const quizData = [];
+  SKILL_ORDER.forEach(skillId => {
+    const pool = QUESTION_POOLS[skillId];
+    const count = SKILL_Q_COUNTS[skillId];
+    const meta = SKILL_META[skillId];
+
+    if (!pool) return;
+
+    // Special skills with fixed questions (no difficulty levels)
+    const hasFixed = pool.every(q => q.d === undefined);
+    let selected = [];
+
+    if (hasFixed) {
+      // Creative, Research, Memory: use all questions from pool (already exact count)
+      selected = [...pool].slice(0, count);
+    } else {
+      // CAT: start at medium, adapt. For initial build, pick evenly across difficulties
+      // In live use, adaptive selection happens question-by-question
+      const byDiff = { 0:[], 1:[], 2:[] };
+      pool.forEach(q => { if (byDiff[q.d]) byDiff[q.d].push(q); });
+      // Shuffle each tier
+      [0,1,2].forEach(d => byDiff[d].sort(() => Math.random() - 0.5));
+      // Distribution: start mid, fill with easy/hard as needed
+      // Ideal: 1 easy, (count-2) medium, 1 hard
+      const wantEasy = 1, wantHard = Math.min(1, Math.floor(count/3));
+      const wantMed = count - wantEasy - wantHard;
+      selected = [
+        ...byDiff[0].slice(0, wantEasy),
+        ...byDiff[1].slice(0, wantMed),
+        ...byDiff[2].slice(0, wantHard),
+      ];
+      // Fill remaining slots if pool doesn't have enough of a tier
+      while (selected.length < count) {
+        const remaining = pool.filter(q => !selected.includes(q));
+        if (!remaining.length) break;
+        selected.push(remaining[Math.floor(Math.random() * remaining.length)]);
+      }
+      selected = selected.slice(0, count);
+    }
+
+    quizData.push({
+      id: skillId,
+      icon: meta.icon,
+      name: meta.name,
+      timedSeconds: SKILL_TIMERS[skillId],
+      softHint: !!SKILL_SOFT_HINT[skillId],
+      questions: selected,
+      // CAT state per skill
+      catCurrentDiff: 1, // start at medium
+    });
+  });
+  return quizData;
+}
+
+let QUIZ_DATA = buildCATQuizData();
+const TOTAL_QUESTIONS = SKILL_ORDER.reduce((s, id) => s + SKILL_Q_COUNTS[id], 0); // 50
+
+
+// ── QUIZ STATE ──
+let quizSkillIdx = 0;
+let quizQIdx = 0;
+let quizAnswers = {};
+let quizSelected = null;
+
+function initQuizDots() {
+  const container = document.getElementById('skill-dots');
+  container.innerHTML = '';
+  QUIZ_DATA.forEach((s, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'skill-dot' + (i === 0 ? ' active' : '');
+    dot.id = 'dot-' + i;
+    dot.title = s.name;
+    container.appendChild(dot);
+  });
+}
+
+// ── TIMER STATE ──
+let quizTimerInterval = null;
+let quizTimerLocked = false; // true once timer fires or Next clicked after PARAGRAPH
+
+function clearQuizTimer() {
+  if (quizTimerInterval) { clearInterval(quizTimerInterval); quizTimerInterval = null; }
+}
+
+function startQuizTimer(seconds) {
+  clearQuizTimer();
+  quizTimerLocked = false;
+  const wrap = document.getElementById('quiz-timer-wrap');
+  const display = document.getElementById('quiz-timer-display');
+  if (!wrap || !display) return;
+  wrap.style.display = 'flex';
+  let remaining = seconds;
+  display.textContent = remaining + 's';
+  quizTimerInterval = setInterval(() => {
+    remaining--;
+    display.textContent = remaining + 's';
+    if (remaining <= 10) display.style.color = '#f44336';
+    else display.style.color = '#f0a090';
+    if (remaining <= 0) {
+      clearQuizTimer();
+      // Auto-ADVANCE (not lock-as-wrong) per PDF spec
+      quizTimerLocked = true;
+      if (quizSelected === null) {
+        quizSelected = -1; // timed out, no answer
+        const skillId = QUIZ_DATA[quizSkillIdx].id;
+        if (!quizAnswers[skillId]) quizAnswers[skillId] = [];
+        quizAnswers[skillId][quizQIdx] = -1;
+      }
+      display.textContent = '⏰';
+      // Auto-advance after brief pause so user sees the timeout indicator
+      setTimeout(() => { quizNext(); }, 600);
+    }
+  }, 1000);
+}
+
+// ── MEMORY PHASE TRACKING ──
+let memoryPhase = 'show'; // 'show' | 'recall'
+let memoryTimer = null;
+let memoryMultiSelected = new Set();
+
+function clearMemoryTimer() {
+  if (memoryTimer) { clearTimeout(memoryTimer); memoryTimer = null; }
+}
+
+function renderQuizQuestion() {
+  clearQuizTimer();
+  clearMemoryTimer();
+  memoryPhase = 'show';
+  memoryMultiSelected = new Set();
+  quizTimerLocked = false;
+
+  const skill = QUIZ_DATA[quizSkillIdx];
+  const q = skill.questions[quizQIdx];
+  const totalQ = QUIZ_DATA.slice(0, quizSkillIdx).reduce((s,sk) => s + sk.questions.length, 0) + quizQIdx + 1;
+
+  document.getElementById('quiz-progress-label').textContent =
+    `STEP 3 OF 4 — Skills Assessment · Question ${totalQ} of ${TOTAL_QUESTIONS}`;
+  document.getElementById('quiz-progress-bar').style.width =
+    (30 + (totalQ / TOTAL_QUESTIONS) * 35) + '%';
+  document.getElementById('quiz-counter').textContent = `${totalQ} / ${TOTAL_QUESTIONS}`;
+  document.getElementById('quiz-skill-badge').textContent = skill.icon + ' ' + skill.name;
+
+  // Show CAT label if applicable
+  const catLabel = (q.d !== undefined) ? [' ● Easy',' ● Medium',' ● Hard'][q.d] || '' : '';
+  if (catLabel) {
+    document.getElementById('quiz-skill-badge').title = 'Adaptive difficulty' + catLabel;
+  }
+
+  // Hide all dynamic sections
+  document.getElementById('quiz-options').innerHTML = '';
+  document.getElementById('quiz-options').style.display = '';
+  document.getElementById('quiz-text-input-wrap').style.display = 'none';
+  document.getElementById('quiz-memory-display').style.display = 'none';
+  document.getElementById('quiz-passage-wrap').style.display = 'none';
+  document.getElementById('quiz-distractor-wrap').style.display = 'none';
+  document.getElementById('quiz-timer-wrap').style.display = 'none';
+  document.getElementById('quiz-timer-display').style.color = '#f0a090';
+
+  // Soft hint for no-limit skills
+  const hintEl = document.getElementById('quiz-soft-hint');
+  hintEl.style.display = skill.softHint ? 'block' : 'none';
+
+  quizSelected = null;
+  document.getElementById('quiz-next-btn').style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (q.type === 'PARAGRAPH' || q.type === 'DIVERGENT') {
+    document.getElementById('quiz-qtype').textContent = q.type === 'DIVERGENT' ? '💡 DIVERGENT THINKING' : '✍️ WRITTEN RESPONSE';
+    if (q.passage) {
+      const pw = document.getElementById('quiz-passage-wrap');
+      pw.innerHTML = q.passage.replace(/\n/g, '<br>');
+      pw.style.display = 'block';
+    }
+    document.getElementById('quiz-question').textContent = q.q;
+    document.getElementById('quiz-options').style.display = 'none';
+    document.getElementById('quiz-text-input-wrap').style.display = 'block';
+    document.getElementById('quiz-text-answer').value = '';
+  }
+  else if (q.type === 'PASSAGE') {
+    document.getElementById('quiz-qtype').textContent = '📖 READING COMPREHENSION';
+    const pw = document.getElementById('quiz-passage-wrap');
+    pw.innerHTML = q.passage;
+    pw.style.display = 'block';
+    document.getElementById('quiz-question').textContent = q.q;
+    renderMCQOptions(q);
+    if (skill.timedSeconds) startQuizTimer(skill.timedSeconds);
+  }
+  else if (q.type === 'MEMORY_RECALL' || q.type === 'MEMORY_SEQUENCE' || q.type === 'MEMORY_STORY' || q.type === 'MEMORY_PAIRS') {
+    renderMemoryQuestion(q, skill);
+  }
+  else {
+    // MCQ / SCENARIO
+    document.getElementById('quiz-qtype').textContent =
+      q.type === 'SCENARIO' ? '📋 SCENARIO — What would you do?' : '❓ MULTIPLE CHOICE';
+    document.getElementById('quiz-question').textContent = q.q;
+    renderMCQOptions(q);
+    if (skill.timedSeconds) startQuizTimer(skill.timedSeconds);
+  }
+}
+
+function renderMCQOptions(q) {
+  const optContainer = document.getElementById('quiz-options');
+  optContainer.style.display = '';
+  const letters = ['A','B','C','D'];
+  q.options.forEach((opt, i) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-option';
+    div.innerHTML = `<div class="option-letter">${letters[i]}</div><div class="option-text">${opt}</div>`;
+    div.onclick = () => selectOption(i);
+    optContainer.appendChild(div);
+  });
+}
+
+function renderMemoryQuestion(q, skill) {
+  const DISTRACTORS = [
+    { q:'Count backwards from 100 by 7s. What is 100 − 7 − 7 − 7?', a:'79' },
+    { q:'Spell "CAREER" backwards:', a:'REERAC' },
+    { q:'How many letters are in "ASSESSMENT"?', a:'10' },
+    { q:'What is 13 × 6?', a:'78' },
+    { q:'Name a fruit that starts with M:', a:'' },
+  ];
+  const distractor = DISTRACTORS[Math.floor(Math.random() * DISTRACTORS.length)];
+
+  if (q.type === 'MEMORY_RECALL') {
+    document.getElementById('quiz-qtype').textContent = '🧠 MEMORY CHALLENGE — Memorise & Recall';
+    document.getElementById('quiz-question').textContent = 'Memorise these items carefully. They will disappear in ' + q.showSeconds + ' seconds!';
+    document.getElementById('quiz-options').style.display = 'none';
+    document.getElementById('quiz-memory-display').style.display = 'block';
+    const itemsDiv = document.getElementById('quiz-memory-items');
+    itemsDiv.innerHTML = '';
+    q.memoryItems.forEach(item => {
+      const chip = document.createElement('div');
+      chip.style.cssText = 'background:rgba(212,168,67,0.15);border:1px solid rgba(212,168,67,0.4);border-radius:8px;padding:0.5rem 0.9rem;font-size:0.95rem;';
+      chip.textContent = item;
+      itemsDiv.appendChild(chip);
+    });
+    document.getElementById('quiz-memory-status').textContent = '⏳ Memorise these items…';
+    startMemoryCountdown(q.showSeconds, () => {
+      // Show distractor task if specified
+      const distSecs = q.distractorSeconds || 0;
+      if (distSecs > 0) {
+        showDistractorTask(distractor, distSecs, () => showMemoryRecallOptions(q));
+      } else { showMemoryRecallOptions(q); }
+    });
+  }
+  else if (q.type === 'MEMORY_SEQUENCE') {
+    const label = q.label || 'Digit Span';
+    document.getElementById('quiz-qtype').textContent = '🧠 MEMORY — ' + label;
+    document.getElementById('quiz-question').textContent = 'Remember this sequence! It disappears in ' + q.showSeconds + ' seconds.';
+    document.getElementById('quiz-options').style.display = 'none';
+    document.getElementById('quiz-memory-display').style.display = 'block';
+    const itemsDiv = document.getElementById('quiz-memory-items');
+    itemsDiv.innerHTML = '';
+    q.sequence.forEach((num, i) => {
+      const chip = document.createElement('div');
+      chip.style.cssText = 'background:rgba(26,122,110,0.25);border:1.5px solid rgba(45,179,160,0.5);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-family:Space Mono,monospace;font-size:1.2rem;font-weight:700;color:var(--teal-light);';
+      chip.textContent = num;
+      itemsDiv.appendChild(chip);
+      if (i < q.sequence.length - 1) {
+        const arrow = document.createElement('span');
+        arrow.style.cssText = 'color:rgba(245,240,232,0.3);font-size:1rem;align-self:center;';
+        arrow.textContent = '→';
+        itemsDiv.appendChild(arrow);
+      }
+    });
+    document.getElementById('quiz-memory-status').textContent = '⏳ Remember the order…';
+    startMemoryCountdown(q.showSeconds, () => {
+      document.getElementById('quiz-memory-display').style.display = 'none';
+      document.getElementById('quiz-question').textContent = q.q;
+      document.getElementById('quiz-qtype').textContent = '🧠 RECALL — What was the sequence?';
+      renderMCQOptions(q);
+    });
+  }
+  else if (q.type === 'MEMORY_STORY') {
+    const label = q.label || 'Delayed Recall';
+    document.getElementById('quiz-qtype').textContent = '🧠 MEMORY — ' + label;
+    document.getElementById('quiz-question').textContent = 'Read carefully — this passage disappears in ' + q.showSeconds + ' seconds!';
+    document.getElementById('quiz-options').style.display = 'none';
+    const passageWrap = document.getElementById('quiz-passage-wrap');
+    passageWrap.innerHTML = q.story;
+    passageWrap.style.display = 'block';
+    document.getElementById('quiz-memory-display').style.display = 'block';
+    document.getElementById('quiz-memory-items').innerHTML = '';
+    document.getElementById('quiz-memory-status').textContent = '⏳ Reading time…';
+    startMemoryCountdown(q.showSeconds, () => {
+      passageWrap.style.display = 'none';
+      document.getElementById('quiz-memory-display').style.display = 'none';
+      const distSecs = q.distractorSeconds || 0;
+      if (distSecs > 0) {
+        document.getElementById('quiz-qtype').textContent = '🧠 MEMORY — Distractor Task';
+        document.getElementById('quiz-question').textContent = 'Passage is hidden. Complete this quick task first…';
+        showDistractorTask(distractor, distSecs, () => {
+          document.getElementById('quiz-question').textContent = q.q;
+          document.getElementById('quiz-qtype').textContent = '🧠 RECALL — Answer from memory';
+          renderMCQOptions(q);
+        });
+      } else {
+        document.getElementById('quiz-question').textContent = q.q;
+        document.getElementById('quiz-qtype').textContent = '🧠 RECALL — Answer from memory';
+        renderMCQOptions(q);
+      }
+    });
+  }
+  else if (q.type === 'MEMORY_PAIRS') {
+    const label = q.label || 'Paired-Associate Learning';
+    document.getElementById('quiz-qtype').textContent = '🧠 MEMORY — ' + label;
+    document.getElementById('quiz-question').textContent = 'Memorise these word pairs. They disappear in ' + q.showSeconds + ' seconds!';
+    document.getElementById('quiz-options').style.display = 'none';
+    document.getElementById('quiz-memory-display').style.display = 'block';
+    const itemsDiv = document.getElementById('quiz-memory-items');
+    itemsDiv.innerHTML = '';
+    q.pairs.forEach(([w1, w2]) => {
+      const chip = document.createElement('div');
+      chip.style.cssText = 'background:rgba(212,168,67,0.1);border:1px solid rgba(212,168,67,0.35);border-radius:8px;padding:0.4rem 0.8rem;font-size:0.9rem;display:flex;align-items:center;gap:0.5rem;';
+      chip.innerHTML = `<strong style="color:var(--gold)">${w1}</strong><span style="color:rgba(245,240,232,0.4)">→</span><span>${w2}</span>`;
+      itemsDiv.appendChild(chip);
+    });
+    document.getElementById('quiz-memory-status').textContent = '⏳ Memorise the pairs…';
+    startMemoryCountdown(q.showSeconds, () => {
+      document.getElementById('quiz-memory-display').style.display = 'none';
+      document.getElementById('quiz-question').textContent = q.q;
+      document.getElementById('quiz-qtype').textContent = '🧠 RECALL — Word pair';
+      renderMCQOptions(q);
+    });
+  }
+}
+
+function showMemoryRecallOptions(q) {
+  document.getElementById('quiz-memory-display').style.display = 'none';
+  document.getElementById('quiz-question').textContent = q.q;
+  document.getElementById('quiz-qtype').textContent = '🧠 RECALL — Select all items you saw';
+  const optContainer = document.getElementById('quiz-options');
+  optContainer.style.display = '';
+  const shuffled = [...q.allOptions].map((opt, i) => ({ opt, origIdx: i }))
+    .sort(() => Math.random() - 0.5);
+  shuffled.forEach(({ opt, origIdx }) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-option';
+    div.dataset.origIdx = origIdx;
+    div.innerHTML = `<div class="option-letter" style="border-radius:3px;width:20px;height:20px;font-size:0.6rem;">&#9744;</div><div class="option-text">${opt}</div>`;
+    div.onclick = () => toggleMemoryMulti(div, origIdx, q.correctSet);
+    optContainer.appendChild(div);
+  });
+  document.getElementById('quiz-next-btn').style.display = 'inline-block';
+  quizSelected = 'multi';
+}
+
+function showDistractorTask(distractor, seconds, callback) {
+  const wrap = document.getElementById('quiz-distractor-wrap');
+  const qEl = document.getElementById('quiz-distractor-q');
+  const timerEl = document.getElementById('quiz-distractor-timer');
+  const input = document.getElementById('quiz-distractor-input');
+  wrap.style.display = 'block';
+  qEl.textContent = distractor.q;
+  input.value = '';
+  input.focus();
+  let remaining = seconds;
+  timerEl.textContent = remaining + 's remaining';
+  const interval = setInterval(() => {
+    remaining--;
+    timerEl.textContent = remaining + 's remaining';
+    if (remaining <= 0) {
+      clearInterval(interval);
+      wrap.style.display = 'none';
+      callback();
+    }
+  }, 1000);
+}
+
+function startMemoryCountdown(seconds, callback) {
+  let remaining = seconds;
+  const statusEl = document.getElementById('quiz-memory-status');
+  const timerWrap = document.getElementById('quiz-timer-wrap');
+  const timerDisp = document.getElementById('quiz-timer-display');
+  timerWrap.style.display = 'flex';
+  timerDisp.textContent = remaining + 's';
+  memoryTimer = setInterval(() => {
+    remaining--;
+    timerDisp.textContent = remaining + 's';
+    if (remaining <= 3) timerDisp.style.color = '#f44336';
+    if (remaining <= 0) {
+      clearInterval(memoryTimer); memoryTimer = null;
+      timerWrap.style.display = 'none';
+      if (statusEl) statusEl.textContent = '';
+      callback();
+    }
+  }, 1000);
+}
+
+function toggleMemoryMulti(div, origIdx, correctSet) {
+  if (memoryMultiSelected.has(origIdx)) {
+    memoryMultiSelected.delete(origIdx);
+    div.classList.remove('selected');
+    div.querySelector('.option-letter').textContent = '☐';
+  } else {
+    memoryMultiSelected.add(origIdx);
+    div.classList.add('selected');
+    div.querySelector('.option-letter').textContent = '☑';
+  }
+}
+
+function onTextAnswerInput() {
+  const val = document.getElementById('quiz-text-answer').value.trim();
+  const btn = document.getElementById('quiz-next-btn');
+  if (val.length >= 20) {
+    btn.style.display = 'inline-block';
+    quizSelected = 'text';
+  } else {
+    btn.style.display = 'none';
+    quizSelected = null;
+  }
+}
+
+function selectOption(idx) {
+  if (quizTimerLocked) return; // timer expired, already locked
+  quizSelected = idx;
+
+  document.querySelectorAll('.quiz-option').forEach((el, i) => {
+    el.classList.remove('selected');
+    if (i === idx) el.classList.add('selected');
+  });
+  document.getElementById('quiz-next-btn').style.display = 'inline-block';
+
+  // store answer
+  const skillId = QUIZ_DATA[quizSkillIdx].id;
+  if (!quizAnswers[skillId]) quizAnswers[skillId] = [];
+  quizAnswers[skillId][quizQIdx] = idx;
+}
+
+function quizNext() {
+  if (quizSelected === null) return;
+
+  clearQuizTimer();
+  clearMemoryTimer();
+
+  const skill = QUIZ_DATA[quizSkillIdx];
+  const q = skill.questions[quizQIdx];
+
+  // Lock options
+  document.querySelectorAll('.quiz-option').forEach(el => { el.style.pointerEvents = 'none'; });
+
+  const skillId = skill.id;
+  if (!quizAnswers[skillId]) quizAnswers[skillId] = [];
+
+  // Store answers
+  if (q.type === 'PARAGRAPH' || q.type === 'DIVERGENT') {
+    const text = document.getElementById('quiz-text-answer').value.trim();
+    quizAnswers[skillId][quizQIdx] = text;
+  } else if (q.type === 'MEMORY_RECALL') {
+    const correctSet = new Set(q.correctSet);
+    let hits = 0, fp = 0;
+    memoryMultiSelected.forEach(idx => { if (correctSet.has(idx)) hits++; else fp++; });
+    const score = Math.max(0, hits / q.correctSet.length - fp / (q.allOptions.length - q.correctSet.length));
+    quizAnswers[skillId][quizQIdx] = score;
+  }
+  // else already stored by selectOption
+
+  // ── CAT ADAPTATION: adjust next question difficulty ──
+  // Only applies for skills with difficulty-levelled pools
+  if (q.d !== undefined && quizQIdx < skill.questions.length - 1) {
+    const wasCorrect = quizAnswers[skillId][quizQIdx] === q.answer;
+    if (wasCorrect) skill.catCurrentDiff = Math.min(2, (skill.catCurrentDiff || 1) + 1);
+    else            skill.catCurrentDiff = Math.max(0, (skill.catCurrentDiff || 1) - 1);
+    // If remaining questions haven't been chosen yet (adaptive pool), pick next by difficulty
+    // (Static build: next question is pre-selected, but we can swap if a better-difficulty one exists)
+    const nextIdx = quizQIdx + 1;
+    if (nextIdx < skill.questions.length) {
+      const targetDiff = skill.catCurrentDiff;
+      const pool = QUESTION_POOLS[skillId];
+      if (pool) {
+        const usedQs = new Set(skill.questions.map(q2 => q2.q));
+        const candidates = pool.filter(p => p.d === targetDiff && !usedQs.has(p.q));
+        if (candidates.length > 0) {
+          // Swap the next pre-selected question with an adaptive one
+          skill.questions[nextIdx] = candidates[Math.floor(Math.random() * candidates.length)];
+        }
+      }
+    }
+  }
+
+  quizQIdx++;
+  const skillQCount = skill.questions.length;
+  if (quizQIdx >= skillQCount) {
+    document.getElementById('dot-' + quizSkillIdx).classList.remove('active');
+    document.getElementById('dot-' + quizSkillIdx).classList.add('done');
+    quizSkillIdx++;
+    quizQIdx = 0;
+    if (quizSkillIdx >= QUIZ_DATA.length) {
+      showSkillSummary();
+      return;
+    }
+    document.getElementById('dot-' + quizSkillIdx).classList.add('active');
+  }
+  renderQuizQuestion();
+}
+
+function computeSkillScores() {
+  const scores = {};
+  QUIZ_DATA.forEach(skill => {
+    const ans = quizAnswers[skill.id] || [];
+    let totalPoints = 0;
+    let maxPoints = 0;
+    skill.questions.forEach((q, i) => {
+      maxPoints += 1;
+      if (q.type === 'PARAGRAPH' || q.type === 'DIVERGENT') {
+        totalPoints += (typeof ans[i] === 'string' && ans[i].length >= 20) ? 0.75 : 0;
+      } else if (q.type === 'MEMORY_RECALL') {
+        totalPoints += (typeof ans[i] === 'number') ? ans[i] : 0;
+      } else {
+        if (ans[i] !== undefined && ans[i] !== -1 && ans[i] === q.answer) totalPoints += 1;
+      }
+    });
+    scores[skill.id] = maxPoints > 0 ? Math.round((totalPoints / maxPoints) * 100) : 0;
+  });
+  return scores;
+}
+
+function restartQuiz() {
+  // Rebuild fresh CAT question set (new random questions)
+  QUIZ_DATA = buildCATQuizData();
+  quizSkillIdx = 0; quizQIdx = 0;
+  quizAnswers = {}; quizSelected = null;
+  quizTimerLocked = false; memoryPhase = 'show'; memoryMultiSelected = new Set();
+  initQuizDots();
+  renderQuizQuestion();
+  goToScreen('screen-skills');
+}
+
+function showSkillSummary() {
+  const scores = computeSkillScores();
+  state.skills = scores;
+
+  const grid = document.getElementById('score-summary-grid');
+  grid.innerHTML = '';
+  QUIZ_DATA.forEach(skill => {
+    const pct = scores[skill.id];
+    let level = pct >= 80 ? 'Excellent' : pct >= 60 ? 'Good' : pct >= 40 ? 'Average' : 'Developing';
+    const chip = document.createElement('div');
+    chip.className = 'score-chip';
+    chip.innerHTML = `
+      <div class="chip-icon">${skill.icon}</div>
+      <div class="chip-name">${skill.name}</div>
+      <div class="chip-bar"><div class="chip-fill" style="width:0%" data-pct="${pct}"></div></div>
+      <div class="chip-score">${pct}% · ${level}</div>`;
+    grid.appendChild(chip);
+  });
+
+  goToScreen('screen-skills-summary');
+
+  // animate bars after render
+  setTimeout(() => {
+    document.querySelectorAll('.chip-fill').forEach(el => {
+      el.style.width = el.dataset.pct + '%';
+    });
+  }, 100);
+}
+
+
+function goToSkills() {
+  const selectedTags = [...document.querySelectorAll('#interests-tags .tag.selected')];
+  const errEl = document.getElementById('err-interests');
+  if (selectedTags.length === 0) {
+    errEl.classList.add('visible');
+    return;
+  }
+  errEl.classList.remove('visible');
+  state.interests = selectedTags.map(t => t.textContent.trim());
+  state.interestText = document.getElementById('interest-text').value.trim();
+  initQuizDots();
+  renderQuizQuestion();
+  goToScreen('screen-skills');
+}
+
+function toggleTag(el) { el.classList.toggle('selected'); }
+
+function goToScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top: 0, behavior:'smooth'});
+}
+
+function startAssessment() {
+  document.getElementById('home-screen').style.display = 'none';
+  document.getElementById('phases-nav').style.display = 'flex';
+  document.getElementById('tab1').classList.add('active');
+  document.getElementById('tab2').classList.remove('active');
+  // Always land on profile, regardless of any leftover screen state
+  document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById('screen-profile').classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function skipToPhase2() {
+  document.getElementById('home-screen').style.display = 'none';
+  document.getElementById('phases-nav').style.display = 'flex';
+  switchPhase(2);
+}
+
+function switchPhase(n) {
+  document.getElementById('tab1').classList.toggle('active', n === 1);
+  document.getElementById('tab2').classList.toggle('active', n === 2);
+  if (n === 1) {
+    goToScreen(state.phase1Result ? 'screen-results' : 'screen-profile');
+  } else {
+    goToScreen('screen-phase2');
+  }
+}
+
+function clearFieldError(id, errId) {
+  const el = document.getElementById(id);
+  const err = document.getElementById(errId);
+  if (el) el.classList.remove('error');
+  if (err) err.classList.remove('visible');
+}
+
+function showFieldError(id, errId) {
+  const el = document.getElementById(id);
+  const err = document.getElementById(errId);
+  if (el) el.classList.add('error');
+  if (err) err.classList.add('visible');
+}
+
+function goToInterests() {
+  const name = document.getElementById('student-name').value.trim();
+  const stream = document.getElementById('student-stream').value;
+  const marks = document.getElementById('student-marks').value.trim();
+  const st = document.getElementById('student-state').value.trim();
+  let valid = true;
+
+  clearFieldError('student-name','err-name');
+  clearFieldError('student-stream','err-stream');
+  clearFieldError('student-marks','err-marks');
+  clearFieldError('student-state','err-state');
+  document.getElementById('profile-error-banner').classList.remove('visible');
+
+  if (!name) { showFieldError('student-name','err-name'); valid = false; }
+  if (!stream) { showFieldError('student-stream','err-stream'); valid = false; }
+  const marksNum = parseFloat(marks);
+  if (!marks || isNaN(marksNum) || marksNum < 0 || marksNum > 100) { showFieldError('student-marks','err-marks'); valid = false; }
+  if (!st) { showFieldError('student-state','err-state'); valid = false; }
+
+  if (!valid) {
+    document.getElementById('profile-error-banner').classList.add('visible');
+    document.getElementById('student-name').scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+
+  state.name = name; state.stream = stream; state.marks = parseFloat(marks); state.state = st;
+  goToScreen('screen-interests');
+}
+
+
+
+function goToCareerGoals() {
+  state.personality = document.getElementById('personality').value;
+  goToScreen('screen-goals');
+}
+
+// ── PHASE I AI CALL ──
+// ============================================================
+// RULE ENGINE (replaces AI calls for Phase 1 & Phase 2 results)
+// ============================================================
+// ============================================================
+// CareerCompass Rule Engine — Phase 1 (course matching) core
+// Pure functions, no DOM. Testable with plain Node.
+// ============================================================
+
+// NOTE: SKILL_META is already defined earlier in this file (used by the quiz) — reused here as-is.
+
+const INTEREST_ID_BY_LABEL = {
+  'science research': 'science',
+  'computers technology': 'tech',
+  'medicine healthcare': 'medicine',
+  'engineering construction': 'engineering',
+  'art design': 'art',
+  'photography media': 'media',
+  'writing journalism': 'writing',
+  'performing arts': 'performing',
+  'environment nature': 'environment',
+  'marine ocean studies': 'marine',
+  'food nutrition': 'food',
+  'aviation aerospace': 'aviation',
+  'law justice': 'law',
+  'finance business': 'finance',
+  'psychology counselling': 'psychology',
+  'teaching education': 'teaching',
+  'social work ngo': 'socialwork',
+  'sports fitness': 'sports',
+  'hospitality tourism': 'hospitality',
+  'defence security': 'defence',
+  'agriculture farming': 'agriculture',
+  'pharmacy drug sciences': 'pharmacy',
+  'biotechnology genetics': 'biotech',
+  'architecture': 'architecture',
+};
+
+const INTEREST_DISPLAY = {
+  science:'science and research', tech:'computers and technology', medicine:'medicine and healthcare',
+  engineering:'engineering and construction', art:'art and design', media:'photography and media',
+  writing:'writing and journalism', performing:'performing arts', environment:'environment and nature',
+  marine:'marine and ocean studies', food:'food and nutrition', aviation:'aviation and aerospace',
+  law:'law and justice', finance:'finance and business', psychology:'psychology and counselling',
+  teaching:'teaching and education', socialwork:'social work', sports:'sports and fitness',
+  hospitality:'hospitality and tourism', defence:'defence and security', agriculture:'agriculture and farming',
+  pharmacy:'pharmacy and drug sciences', biotech:'biotechnology and genetics', architecture:'architecture',
+};
+
+function normalizeLabel(raw) {
+  return raw.replace(/[^a-zA-Z\s]/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();
+}
+
+function getInterestIds(rawInterestArray) {
+  return new Set(
+    (rawInterestArray || [])
+      .map(raw => INTEREST_ID_BY_LABEL[normalizeLabel(raw)])
+      .filter(Boolean)
+  );
+}
+
+function streamGroupOf(stream) {
+  const map = {
+    'Science (PCM)': 'science_pcm',
+    'Science (PCB)': 'science_pcb',
+    'Science (PCMB)': 'science_pcmb',
+    'Commerce': 'commerce',
+    'Arts / Humanities': 'arts',
+    'Vocational': 'vocational',
+  };
+  return map[stream] || 'other';
+}
+
+function personalityCode(full) {
+  if (!full) return null;
+  const known = ['Analytical','Creative','Social','Enterprising','Conventional','Investigative'];
+  const hit = known.find(k => full.startsWith(k));
+  return hit ? hit.toLowerCase() : null;
+}
+
+function goalCode(full) {
+  const map = {
+    'High salary & financial stability': 'money',
+    'Making a positive impact on society': 'impact',
+    'Creative freedom & expression': 'creative',
+    'Job security & government employment': 'security',
+    'Starting my own business / entrepreneurship': 'entrepreneur',
+    'Global opportunities & international career': 'global',
+    'Work-life balance & flexibility': 'balance',
+    'Prestige & social recognition': 'prestige',
+  };
+  return map[full] || null;
+}
+
+// ---------- COURSE DATABASE ----------
+const COURSES = [
+  { id:'cse', name:'B.E./B.Tech Computer Science & Engineering', category:'Engineering & Technology', blurb:'Covers programming, algorithms, data structures, and software systems design.', eligibleGroups:['science_pcm','science_pcmb'], minMarks:60, interests:['tech','science'], skills:{logical:0.4,technical:0.35,numerical:0.25}, personalityFit:['analytical','investigative'], goalFit:['money','global'], duration:'4 years', exams:['JEE Main','TNEA (Anna University)','State CET'], careers:['Software Engineer','Data Scientist','Product Manager','Cloud/DevOps Engineer'], salary:'₹4 – ₹25 LPA', hiddenGem:false },
+  { id:'ece', name:'B.E./B.Tech Electronics & Communication (ECE)', category:'Engineering & Technology', blurb:'Focuses on circuits, signal processing, communication systems, and embedded hardware.', eligibleGroups:['science_pcm','science_pcmb'], minMarks:55, interests:['tech','engineering'], skills:{logical:0.35,technical:0.4,numerical:0.25}, personalityFit:['analytical','investigative'], goalFit:['money'], duration:'4 years', exams:['JEE Main','TNEA','State CET'], careers:['Embedded Systems Engineer','VLSI Designer','Telecom Engineer','IoT Developer'], salary:'₹3.5 – ₹18 LPA', hiddenGem:false },
+  { id:'eee', name:'B.E./B.Tech Electrical & Electronics (EEE)', category:'Engineering & Technology', blurb:'Covers power systems, electrical machines, control systems, and electronics.', eligibleGroups:['science_pcm','science_pcmb'], minMarks:55, interests:['tech','engineering'], skills:{logical:0.3,technical:0.4,numerical:0.3}, personalityFit:['analytical','conventional'], goalFit:['security','money'], duration:'4 years', exams:['JEE Main','TNEA','State CET'], careers:['Power Systems Engineer','Electrical Design Engineer','Renewable Energy Engineer'], salary:'₹3.5 – ₹15 LPA', hiddenGem:false },
+  { id:'mech', name:'B.E./B.Tech Mechanical Engineering', category:'Engineering & Technology', blurb:'Covers thermodynamics, manufacturing, machine design, and robotics fundamentals.', eligibleGroups:['science_pcm','science_pcmb'], minMarks:50, interests:['engineering','tech'], skills:{spatial:0.35,technical:0.35,numerical:0.3}, personalityFit:['conventional','investigative'], goalFit:['security'], duration:'4 years', exams:['JEE Main','TNEA','State CET'], careers:['Design Engineer','Manufacturing Engineer','Automotive Engineer','Robotics Engineer'], salary:'₹3 – ₹14 LPA', hiddenGem:false },
+  { id:'civil', name:'B.E./B.Tech Civil Engineering', category:'Engineering & Technology', blurb:'Covers structural design, construction management, and urban infrastructure.', eligibleGroups:['science_pcm','science_pcmb'], minMarks:50, interests:['engineering','environment'], skills:{spatial:0.4,numerical:0.3,technical:0.3}, personalityFit:['conventional'], goalFit:['security','impact'], duration:'4 years', exams:['JEE Main','TNEA','State CET'], careers:['Structural Engineer','Site Engineer','Urban Planner','Construction Manager'], salary:'₹3 – ₹12 LPA', hiddenGem:false },
+  { id:'arch', name:'B.Arch (Architecture)', category:'Design & Architecture', blurb:'Combines design, structural understanding, and spatial planning for buildings and spaces.', eligibleGroups:['science_pcm','science_pcmb'], minMarks:50, interests:['architecture','art','engineering'], skills:{spatial:0.5,creative:0.3,numerical:0.2}, personalityFit:['creative','investigative'], goalFit:['creative'], duration:'5 years', exams:['NATA','JEE Main Paper 2'], careers:['Architect','Urban Designer','Interior Designer'], salary:'₹3 – ₹15 LPA', hiddenGem:false },
+  { id:'marine', name:"B.Tech Marine Engineering", category:'Engineering & Technology', blurb:'Trains engineers to operate and maintain ship propulsion and onboard systems.', eligibleGroups:['science_pcm','science_pcmb'], minMarks:60, interests:['marine','engineering','aviation'], skills:{technical:0.4,spatial:0.3,logical:0.3}, personalityFit:['investigative','enterprising'], goalFit:['global','money'], duration:'4 years + sea time', exams:['IMU-CET','JEE Main (select colleges)'], careers:["Marine Engineer","Ship's Engineer Officer",'Naval Architect'], salary:'₹6 – ₹30 LPA (incl. sea pay)', hiddenGem:true },
+  { id:'aero', name:'B.Tech Aeronautical/Aerospace Engineering', category:'Engineering & Technology', blurb:'Covers aircraft design, propulsion, and avionics systems.', eligibleGroups:['science_pcm','science_pcmb'], minMarks:65, interests:['aviation','engineering','tech'], skills:{technical:0.4,numerical:0.3,spatial:0.3}, personalityFit:['investigative'], goalFit:['global','prestige'], duration:'4 years', exams:['JEE Main','State CET'], careers:['Aerospace Engineer','Avionics Engineer','UAV/Drone Engineer'], salary:'₹4 – ₹20 LPA', hiddenGem:true },
+  { id:'bsccs', name:'B.Sc. Computer Science', category:'Pure Sciences', blurb:'A theory-leaning computing degree covering programming and core CS fundamentals.', eligibleGroups:['science_pcm','science_pcb','science_pcmb'], minMarks:45, interests:['tech','science'], skills:{logical:0.35,technical:0.35,numerical:0.3}, personalityFit:['analytical'], goalFit:['money'], duration:'3 years', exams:['Direct admission (marks-based)'], careers:['Software Developer','QA Engineer','IT Analyst'], salary:'₹3 – ₹12 LPA', hiddenGem:false },
+  { id:'mbbs', name:'MBBS (Bachelor of Medicine)', category:'Medicine & Health Sciences', blurb:'Five-and-a-half year medical degree covering clinical and pre-clinical training.', eligibleGroups:['science_pcb','science_pcmb'], minMarks:70, interests:['medicine','science'], skills:{memory:0.35,research:0.35,emotional:0.2,numerical:0.1}, personalityFit:['investigative','social'], goalFit:['impact','prestige'], duration:'5.5 years incl. internship', exams:['NEET-UG'], careers:['Doctor / Physician','Surgeon (after PG)','Medical Officer'], salary:'₹6 – ₹40+ LPA (higher post-PG)', hiddenGem:false },
+  { id:'bds', name:'BDS (Dentistry)', category:'Medicine & Health Sciences', blurb:'Covers oral health, dental surgery, and clinical dentistry.', eligibleGroups:['science_pcb','science_pcmb'], minMarks:60, interests:['medicine'], skills:{spatial:0.3,memory:0.3,technical:0.2,emotional:0.2}, personalityFit:['investigative','conventional'], goalFit:['security','impact'], duration:'5 years incl. internship', exams:['NEET-UG'], careers:['Dentist','Oral Surgeon (after PG)'], salary:'₹4 – ₹18 LPA', hiddenGem:false },
+  { id:'bpharm', name:'B.Pharm (Pharmacy)', category:'Medicine & Health Sciences', blurb:'Covers drug formulation, pharmacology, and pharmaceutical regulation.', eligibleGroups:['science_pcb','science_pcmb','science_pcm'], minMarks:50, interests:['pharmacy','medicine'], skills:{numerical:0.3,memory:0.3,research:0.2,technical:0.2}, personalityFit:['conventional','investigative'], goalFit:['security'], duration:'4 years', exams:['State CET (some states)','Direct admission'], careers:['Pharmacist','Drug Inspector','R&D Associate'], salary:'₹2.5 – ₹10 LPA', hiddenGem:false },
+  { id:'bscnursing', name:'B.Sc. Nursing', category:'Medicine & Health Sciences', blurb:'Trains clinical nursing skills, patient care, and healthcare management.', eligibleGroups:['science_pcb','science_pcmb'], minMarks:50, interests:['medicine'], skills:{emotional:0.4,memory:0.3,technical:0.3}, personalityFit:['social'], goalFit:['security','impact'], duration:'4 years', exams:['NEET / State entrance (varies)'], careers:['Registered Nurse','Nurse Educator','ICU/OT Specialist Nurse'], salary:'₹2.5 – ₹8 LPA (higher abroad)', hiddenGem:false },
+  { id:'ayush', name:'BAMS / BHMS (Ayurveda / Homeopathy)', category:'Medicine & Health Sciences', blurb:'Traditional medicine systems combining diagnosis, herbal/homeopathic treatment, and patient care.', eligibleGroups:['science_pcb','science_pcmb'], minMarks:50, interests:['medicine'], skills:{memory:0.4,research:0.3,emotional:0.3}, personalityFit:['investigative','social'], goalFit:['impact'], duration:'5.5 years', exams:['NEET-UG'], careers:['Ayurvedic/Homeopathic Physician','Wellness Consultant'], salary:'₹3 – ₹10 LPA', hiddenGem:true },
+  { id:'biotech', name:'B.Sc. Biotechnology', category:'Medicine & Health Sciences', blurb:'Covers genetics, molecular biology, and lab-based biological research methods.', eligibleGroups:['science_pcb','science_pcmb'], minMarks:55, interests:['biotech','science'], skills:{research:0.4,technical:0.3,numerical:0.3}, personalityFit:['investigative'], goalFit:['impact','global'], duration:'3 years (MSc recommended)', exams:['Direct admission / university entrance'], careers:['Research Associate','Lab Technologist','Biotech Process Engineer'], salary:'₹3 – ₹12 LPA', hiddenGem:false },
+  { id:'foodtech', name:'B.Sc. Food Technology / Nutrition', category:'Medicine & Health Sciences', blurb:'Covers food processing, quality control, and nutrition science.', eligibleGroups:['science_pcb','science_pcmb'], minMarks:45, interests:['food','science'], skills:{research:0.3,technical:0.3,numerical:0.2,emotional:0.2}, personalityFit:['conventional','investigative'], goalFit:['impact'], duration:'3-4 years', exams:['Direct admission'], careers:['Food Technologist','Quality Control Analyst','Nutritionist/Dietician'], salary:'₹2.5 – ₹9 LPA', hiddenGem:true },
+  { id:'vetsci', name:'B.V.Sc. (Veterinary Science)', category:'Medicine & Health Sciences', blurb:'Covers animal health, surgery, and veterinary public health.', eligibleGroups:['science_pcb','science_pcmb'], minMarks:55, interests:['agriculture','medicine'], skills:{emotional:0.3,memory:0.3,research:0.2,technical:0.2}, personalityFit:['social','investigative'], goalFit:['impact'], duration:'5.5 years', exams:['NEET-UG'], careers:['Veterinarian','Livestock Officer','Wildlife Health Specialist'], salary:'₹3 – ₹10 LPA', hiddenGem:true },
+  { id:'alliedhealth', name:'Allied Health Sciences (Physiotherapy/Optometry/MLT)', category:'Medicine & Health Sciences', blurb:'Specialised clinical-support training in physiotherapy, optometry, or lab technology.', eligibleGroups:['science_pcb','science_pcmb'], minMarks:45, interests:['medicine','sports'], skills:{emotional:0.3,technical:0.3,memory:0.2,numerical:0.2}, personalityFit:['social','conventional'], goalFit:['security','impact'], duration:'3-4 years', exams:['Direct admission / institute entrance'], careers:['Physiotherapist','Optometrist','Lab Technologist'], salary:'₹2.5 – ₹8 LPA', hiddenGem:true },
+  { id:'baenglish', name:'B.A. English', category:'Arts & Humanities', blurb:'Covers literature, language, and critical writing.', eligibleGroups:['arts'], minMarks:40, interests:['writing','teaching'], skills:{verbal:0.5,creative:0.3,research:0.2}, personalityFit:['creative','investigative'], goalFit:['creative','impact'], duration:'3 years', exams:['Direct admission / CUET'], careers:['Content Writer','Editor','Teacher/Professor (after PG+NET)','Journalist'], salary:'₹2.5 – ₹9 LPA', hiddenGem:false },
+  { id:'bapsych', name:'B.A. Psychology', category:'Arts & Humanities', blurb:'Covers human behaviour, cognition, and foundational counselling theory.', eligibleGroups:['arts','science_pcb','science_pcmb'], minMarks:45, interests:['psychology'], skills:{emotional:0.45,verbal:0.25,research:0.3}, personalityFit:['social','investigative'], goalFit:['impact'], duration:'3 years', exams:['Direct admission / CUET'], careers:['Counsellor (after M.A.)','HR Professional','Clinical Psychologist (after PG)'], salary:'₹2.5 – ₹10 LPA', hiddenGem:false },
+  { id:'baeco', name:'B.A. Economics', category:'Arts & Humanities', blurb:'Covers micro/macro economics, statistics, and policy analysis.', eligibleGroups:['arts','commerce'], minMarks:55, interests:['finance'], skills:{numerical:0.35,logical:0.3,research:0.25}, personalityFit:['analytical','investigative'], goalFit:['money','impact'], duration:'3 years', exams:['Direct admission / CUET'], careers:['Economic Analyst','Policy Researcher','Banking & Finance roles'], salary:'₹3 – ₹14 LPA', hiddenGem:false },
+  { id:'bajourno', name:'B.A. Journalism & Mass Communication', category:'Arts & Humanities', blurb:'Covers reporting, media production, and communication strategy.', eligibleGroups:['arts','commerce','science_pcm','science_pcb','science_pcmb'], minMarks:45, interests:['writing','media'], skills:{verbal:0.4,creative:0.35,leadership:0.2}, personalityFit:['creative','enterprising'], goalFit:['creative','prestige'], duration:'3 years', exams:['Direct admission / entrance for top colleges'], careers:['Journalist','News Anchor','Content Strategist','PR Professional'], salary:'₹2.5 – ₹12 LPA', hiddenGem:false },
+  { id:'bfa', name:'B.F.A. (Fine Arts & Design)', category:'Arts & Humanities', blurb:'Covers visual arts, design fundamentals, and portfolio-based practice.', eligibleGroups:['arts','science_pcm','science_pcb','science_pcmb','commerce','vocational'], minMarks:40, interests:['art','performing'], skills:{creative:0.6,spatial:0.3}, personalityFit:['creative'], goalFit:['creative'], duration:'4 years', exams:['Portfolio + entrance test (varies)'], careers:['Graphic Designer','Illustrator','Animator','UI/UX Designer'], salary:'₹2.5 – ₹12 LPA', hiddenGem:false },
+  { id:'ballb', name:'B.A. LLB (Integrated Law, 5 yrs)', category:'Arts & Humanities', blurb:'Combines liberal arts study with full legal training.', eligibleGroups:['arts','commerce','science_pcm','science_pcb','science_pcmb'], minMarks:55, interests:['law'], skills:{verbal:0.35,logical:0.35,leadership:0.2}, personalityFit:['analytical','enterprising'], goalFit:['prestige','money'], duration:'5 years', exams:['CLAT','State Law Entrance'], careers:['Advocate','Corporate Counsel','Judiciary (after exams)'], salary:'₹3 – ₹20 LPA', hiddenGem:false },
+  { id:'bsw', name:'B.S.W. (Social Work)', category:'Arts & Humanities', blurb:'Covers community development, counselling, and NGO/CSR program management.', eligibleGroups:['arts','commerce','science_pcb'], minMarks:40, interests:['socialwork'], skills:{emotional:0.5,leadership:0.3,verbal:0.2}, personalityFit:['social'], goalFit:['impact'], duration:'3 years', exams:['Direct admission'], careers:['NGO Program Officer','Community Development Worker','CSR Coordinator'], salary:'₹2 – ₹6 LPA', hiddenGem:true },
+  { id:'forensic', name:'B.Sc. Forensic Science', category:'Pure Sciences', blurb:'Covers crime scene analysis, forensic lab techniques, and evidence examination.', eligibleGroups:['science_pcb','science_pcmb','science_pcm'], minMarks:55, interests:['science','law'], skills:{research:0.4,logical:0.3,memory:0.3}, personalityFit:['investigative'], goalFit:['impact','prestige'], duration:'3 years', exams:['Direct admission / university entrance'], careers:['Forensic Analyst','Crime Scene Investigator','Lab Examiner (govt.)'], salary:'₹3 – ₹10 LPA', hiddenGem:true },
+  { id:'bcom', name:'B.Com (General / Hons)', category:'Commerce & Business', blurb:'Covers accounting, taxation, and business fundamentals.', eligibleGroups:['commerce'], minMarks:45, interests:['finance'], skills:{numerical:0.4,logical:0.3,leadership:0.2}, personalityFit:['conventional','analytical'], goalFit:['security','money'], duration:'3 years', exams:['Direct admission / CUET'], careers:['Accountant','Tax Consultant','Banking Professional'], salary:'₹2.5 – ₹10 LPA', hiddenGem:false },
+  { id:'bba', name:'BBA / BBM', category:'Commerce & Business', blurb:'Covers management fundamentals, marketing, and business operations.', eligibleGroups:['commerce','arts','science_pcm','science_pcb','science_pcmb'], minMarks:50, interests:['finance'], skills:{leadership:0.4,numerical:0.25,verbal:0.2,emotional:0.15}, personalityFit:['enterprising','social'], goalFit:['entrepreneur','money'], duration:'3 years', exams:['Direct admission / entrance for top colleges'], careers:['Business Analyst','Operations/Marketing roles','MBA pathway'], salary:'₹3 – ₹12 LPA', hiddenGem:false },
+  { id:'cafound', name:'CA Foundation → Chartered Accountancy', category:'Commerce & Business', blurb:'A professional qualification path in accounting, audit, and taxation.', eligibleGroups:['commerce','arts','science_pcm','science_pcb','science_pcmb'], minMarks:55, interests:['finance'], skills:{numerical:0.5,logical:0.3,memory:0.2}, personalityFit:['analytical','conventional'], goalFit:['money','security'], duration:'4-5 years (exams + articleship)', exams:['ICAI CA Foundation Exam'], careers:['Chartered Accountant','Auditor','Financial Controller'], salary:'₹6 – ₹25 LPA (post-qualification)', hiddenGem:false },
+  { id:'bhm', name:'B.H.M. (Hotel Management)', category:'Hospitality', blurb:'Covers hospitality operations, culinary arts, and guest service management.', eligibleGroups:['commerce','arts','science_pcm','science_pcb','science_pcmb','vocational'], minMarks:40, interests:['hospitality','food'], skills:{leadership:0.3,emotional:0.3,technical:0.2,verbal:0.2}, personalityFit:['social','enterprising'], goalFit:['global'], duration:'3-4 years', exams:['NCHMCT JEE'], careers:['Hotel Manager','Chef','Event/Travel Manager'], salary:'₹2.5 – ₹12 LPA (higher abroad/cruise)', hiddenGem:true },
+  { id:'sportssci', name:'B.P.Ed / B.Sc. Sports Science', category:'Sports', blurb:'Covers sports coaching, exercise science, and athlete performance management.', eligibleGroups:['arts','commerce','science_pcm','science_pcb','science_pcmb','vocational'], minMarks:40, interests:['sports'], skills:{leadership:0.3,emotional:0.3,technical:0.2,numerical:0.2}, personalityFit:['enterprising','social'], goalFit:['impact'], duration:'3-4 years', exams:['Direct admission / sports-trial based'], careers:['Sports Coach','Fitness Trainer','Sports Analyst'], salary:'₹2 – ₹8 LPA', hiddenGem:true },
+  { id:'bvoc', name:'B.Voc (Vocational Degree)', category:'Vocational', blurb:'Industry-aligned skill training combined with a formal degree.', eligibleGroups:['vocational','commerce','arts'], minMarks:35, interests:[], skills:{technical:0.4,numerical:0.2,leadership:0.2,emotional:0.2}, personalityFit:['conventional','enterprising'], goalFit:['security'], duration:'3 years', exams:['Direct admission'], careers:['Industry-specific skilled roles (varies by specialisation)'], salary:'₹2 – ₹6 LPA', hiddenGem:false },
+  { id:'agri', name:'B.Sc. Agriculture', category:'Agriculture & Environment', blurb:'Covers crop science, soil management, and agri-business fundamentals.', eligibleGroups:['science_pcb','science_pcmb','vocational'], minMarks:50, interests:['agriculture','environment'], skills:{research:0.3,numerical:0.3,technical:0.2,emotional:0.2}, personalityFit:['investigative','conventional'], goalFit:['security','impact'], duration:'4 years', exams:['ICAR AIEEA / State entrance'], careers:['Agricultural Officer','Agronomist','Agri-business Manager'], salary:'₹2.5 – ₹9 LPA', hiddenGem:true },
+];
+
+// ---------- SCORING ----------
+function computeMatchScore(course, profile) {
+  if (!course.eligibleGroups.includes(profile.streamGroup) && !course.eligibleGroups.includes('any')) {
+    return null;
+  }
+  let interestScore;
+  if (course.interests.length) {
+    const matched = course.interests.filter(id => profile.interestIds.has(id)).length;
+    interestScore = (matched / course.interests.length) * 40;
+  } else {
+    interestScore = 20;
+  }
+  const skillKeys = Object.keys(course.skills);
+  let weightedSum = 0, weightTotal = 0;
+  skillKeys.forEach(k => {
+    const w = course.skills[k];
+    const pct = profile.skills[k] || 0;
+    weightedSum += w * pct;
+    weightTotal += w;
+  });
+  const skillAvg = weightTotal > 0 ? weightedSum / weightTotal : 50;
+  const skillScore = (skillAvg / 100) * 35;
+
+  let marksScore;
+  if (profile.marks >= course.minMarks) {
+    marksScore = 15;
+  } else {
+    marksScore = 15 * Math.max(0, profile.marks / course.minMarks);
+  }
+
+  const personalityBonus = course.personalityFit.includes(profile.personalityCode) ? 7 : 0;
+  const goalBonus = course.goalFit.includes(profile.goalCode) ? 3 : 0;
+
+  return Math.round(Math.min(100, interestScore + skillScore + marksScore + personalityBonus + goalBonus));
+}
+
+function buildProfile(state) {
+  return {
+    streamGroup: streamGroupOf(state.stream),
+    marks: parseFloat(state.marks) || 0,
+    interestIds: getInterestIds(state.interests),
+    skills: state.skills || {},
+    personalityCode: personalityCode(state.personality),
+    goalCode: goalCode(state.careerGoal),
+  };
+}
+
+function rankCourses(state) {
+  const profile = buildProfile(state);
+  const scored = COURSES
+    .map(course => ({ course, score: computeMatchScore(course, profile) }))
+    .filter(m => m.score !== null)
+    .sort((a, b) => b.score - a.score);
+  return { profile, scored };
+}
+
+// ---------- PHASE 1: MARKDOWN OUTPUT ----------
+function topSkillNames(profile, n = 3) {
+  return Object.entries(profile.skills)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, n)
+    .map(([id, val]) => `${SKILL_META[id]?.name || id} (${val}%)`);
+}
+
+function explainFit(course, profile) {
+  const bits = [];
+  const matchedInterests = course.interests.filter(id => profile.interestIds.has(id));
+  if (matchedInterests.length) {
+    bits.push(`your interest in ${matchedInterests.map(id => INTEREST_DISPLAY[id] || id).join(' and ')}`);
+  }
+  const topCourseSkills = Object.keys(course.skills)
+    .sort((a, b) => course.skills[b] - course.skills[a])
+    .slice(0, 2)
+    .map(id => SKILL_META[id]?.name || id);
+  if (topCourseSkills.length) {
+    bits.push(`your ${topCourseSkills.join(' and ')} scores`);
+  }
+  if (profile.marks >= course.minMarks) {
+    bits.push(`marks comfortably above the typical ${course.minMarks}% eligibility mark`);
+  } else {
+    bits.push(`marks a little below the typical ${course.minMarks}% mark — worth a closer look at specific college cutoffs`);
+  }
+  return bits.length ? `Matches ${bits.join(', ')}.` : 'A reasonable general fit based on your overall profile.';
+}
+
+function buildPhase1Markdown(state) {
+  const { profile, scored } = rankCourses(state);
+
+  if (!scored.length) {
+    return `## ⚠️ No Strong Matches Found\nWe couldn't confidently match your stream to courses in our database. This usually means your stream selection or marks weren't captured correctly — please go back and double-check Phase 1, or talk to a school counsellor directly.`;
+  }
+
+  const top = scored[0];
+  const top5 = scored.slice(0, 5);
+  const top5Ids = new Set(top5.map(m => m.course.id));
+  const hiddenGems = scored.filter(m => m.course.hiddenGem && !top5Ids.has(m.course.id)).slice(0, 3);
+
+  const strongest = topSkillNames(profile, 3);
+  const interestLabels = (state.interests || []);
+  const personalityFull = state.personality || '';
+  const personalityLabel = personalityFull.split('—')[0]?.trim();
+  const personalityTrait = personalityFull.split('—')[1]?.trim();
+
+  let md = '';
+  md += `## 🎯 Top Course Recommendation: ${top.course.name}\n`;
+  md += `${top.course.blurb} ${explainFit(top.course, profile)} Typical career paths include ${top.course.careers.slice(0, 3).join(', ')}.\n\n`;
+
+  md += `## 📊 Your Profile Analysis\n`;
+  md += `**Strongest Skills:** ${strongest.length ? strongest.join(', ') : 'Not enough quiz data to determine — consider retaking the skills assessment.'}\n`;
+  md += `**Key Interests Match:** ${interestLabels.length ? interestLabels.join(', ') : 'No interests selected'} — this lines up with our ${top.course.category} recommendations.\n`;
+  md += `**Personality Fit:** ${personalityLabel ? `Your ${personalityLabel} personality type${personalityTrait ? ` ("${personalityTrait}")` : ''} lines up well with ${top.course.category.toLowerCase()} fields.` : 'Not specified — revisit Phase 1 to add this for a more tailored match.'}\n\n`;
+
+  md += `## 🗺 Your Top ${top5.length} Course Recommendations\n\n`;
+  top5.forEach((m, i) => {
+    const c = m.course;
+    md += `**${i + 1}. ${c.name}** (Match Score: ${m.score}/100)\n`;
+    md += `- Why it fits you: ${explainFit(c, profile)}\n`;
+    md += `- Career paths: ${c.careers.join(', ')}\n`;
+    md += `- Duration: ${c.duration} | Entrance Exams: ${c.exams.join(', ')}\n`;
+    md += `- Average salary range: ${c.salary}\n\n`;
+  });
+
+  if (hiddenGems.length) {
+    md += `## 💡 Hidden Gem Courses to Explore\n`;
+    hiddenGems.forEach(m => {
+      md += `- **${m.course.name}**: ${m.course.blurb}\n`;
+    });
+    md += `\n`;
+  }
+
+  md += `## 🚀 Immediate Next Steps\n`;
+  md += `1. Research ${top.course.name} in detail — look up 2-3 colleges offering it within your budget and location preference.\n`;
+  md += `2. Check the entrance exam(s) for your top match (${top.course.exams[0]}) and note the next registration window.\n`;
+  md += `3. Move to Phase 2 and enter your actual subject-wise marks to see realistic college and cutoff matches.\n`;
+  md += `4. Talk to a senior or counsellor currently in ${top.course.category} to validate this direction before committing.\n`;
+
+  return md;
+}
+
+// ---------- PHASE 2: ELIGIBILITY & COLLEGE RECOMMENDATIONS ----------
+// (Previously a local rule-engine + hardcoded college/cutoff database.
+//  Now fully generated by the AI model via the /api/chat endpoint — see
+//  the "PHASE II AI CALL" section below for the actual API-driven logic.)
+
+
+
+
+async function generatePhase1() {
+  const goal = document.getElementById('career-goal').value;
+  const dur = document.getElementById('study-duration').value;
+  const fee = document.getElementById('fee-budget').value;
+  let valid = true;
+
+  clearFieldError('career-goal','err-goal');
+  clearFieldError('study-duration','err-duration');
+  clearFieldError('fee-budget','err-fee');
+  document.getElementById('goals-error-banner').classList.remove('visible');
+
+  if (!goal) { showFieldError('career-goal','err-goal'); valid = false; }
+  if (!dur) { showFieldError('study-duration','err-duration'); valid = false; }
+  if (!fee) { showFieldError('fee-budget','err-fee'); valid = false; }
+
+  if (!valid) {
+    document.getElementById('goals-error-banner').classList.add('visible');
+    document.getElementById('career-goal').scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+
+  state.careerGoal = goal;
+  state.studyDuration = dur;
+  state.feeBudget = fee;
+  state.extraNotes = document.getElementById('extra-notes').value.trim();
+
+  goToScreen('screen-loading');
+
+  const loadingMessages = [
+    'Checking your stream eligibility against the course database…',
+    'Scoring courses against your skills and interests…',
+    'Ranking your top matches…',
+    'Building your personalised roadmap…'
+  ];
+  let lIdx = 0;
+  document.getElementById('loading-status').textContent = loadingMessages[0];
+  const lInterval = setInterval(() => {
+    lIdx++;
+    document.getElementById('loading-status').textContent = loadingMessages[lIdx % loadingMessages.length];
+  }, 450);
+
+  // Rule engine runs instantly — small delay kept purely so the loading
+  // animation doesn't feel broken/instant-flash on screen.
+  setTimeout(() => {
+    clearInterval(lInterval);
+    try {
+      const text = buildPhase1Markdown(state);
+      state.phase1Result = text;
+      document.getElementById('results-content').innerHTML = renderMarkdown(text);
+      goToScreen('screen-results');
+    } catch (err) {
+      document.getElementById('results-content').innerHTML = `<div class="analysis-box"><h4>Error</h4><p>Something went wrong building your recommendations.<br><small>${err.message}</small></p></div>`;
+      goToScreen('screen-results');
+    }
+  }, 1400);
+}
+
+// ── STREAM TYPE SWITCHER ──
+function selectStreamType(type, btn) {
+  document.getElementById('selected-stream-type').value = type;
+  document.querySelectorAll('.stream-tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  ['eng-fields','arts-fields','commerce-fields','medical-fields'].forEach(id => {
+    document.getElementById(id).style.display = 'none';
+  });
+  const map = { engineering:'eng-fields', arts:'arts-fields', commerce:'commerce-fields', medical:'medical-fields', other:'eng-fields' };
+  if (map[type]) document.getElementById(map[type]).style.display = '';
+}
+
+// ── PHASE II AI CALL ──
+// ── PHASE 2 PROMPT BUILDERS (stream-aware) ──
+
+// Stream-specific admissions context: what counts as the "cutoff" and which
+// exams/marks matter for each stream. No hardcoded college names or numeric
+// cutoffs here — those go stale fast and vary by year, so the model reasons
+// from its general knowledge instead, tier-by-tier, the way a real counsellor would.
+const PHASE2_STREAM_CONTEXT = {
+  engineering: {
+    role: 'engineering admissions in Tamil Nadu (TNEA counselling, plus comparable private/deemed/autonomous routes and national exams where relevant)',
+    yardstick: `The student's TNEA cutoff (Maths×1 + Physics×0.5 + Chemistry×0.5, out of 200) is the primary yardstick for TNEA-counselled colleges. If a JEE percentile or CET rank was also given, use those additionally for non-TNEA routes (NITs/IIITs, VIT, other state CETs) — but never invent a JEE/CET-based option if that score wasn't provided.`
+  },
+  medical: {
+    role: 'medical and allied-health admissions in India (NEET-based MBBS/BDS/AYUSH courses, plus allied health/paramedical degrees)',
+    yardstick: `NEET score/percentile (if given) is the primary yardstick for MBBS/BDS/AYUSH. If NEET was not provided, do not assume or estimate one — instead explain the NEET requirement plainly and recommend allied-health/paramedical routes that don't require it, with a clear note to check their NEET status first.`
+  },
+  commerce: {
+    role: 'commerce-stream higher education in India (B.Com, BBA, and foundation-level CA/CS/CMA or integrated law routes)',
+    yardstick: `Accountancy, Business Studies, and Economics marks plus overall % are the primary yardstick for merit-based B.Com/BBA admission. Mention relevant professional entrance routes (CA Foundation, CUET, etc.) only if the student's profile suggests interest in them.`
+  },
+  arts: {
+    role: "arts, humanities, and social-science admissions in India (BA programmes, integrated law, mass communication, design foundation courses, etc.)",
+    yardstick: `Language and elective subject marks plus overall %, together with the student's stated arts subjects, are the primary yardstick. Mention relevant entrance exams (CLAT, CUET, etc.) only if the student's stated preferences suggest interest in them.`
+  },
+  other: {
+    role: 'general undergraduate admissions in India across common merit-based programmes',
+    yardstick: `Overall % and any subject marks given are the primary yardstick, since the specific stream wasn't detailed further. Recommend broadly-applicable, merit-based degree programmes.`
+  }
+};
+
+function buildPhase2SystemPrompt(streamType) {
+  const cfg = PHASE2_STREAM_CONTEXT[streamType] || PHASE2_STREAM_CONTEXT.other;
+
+  return `You are an AI Admissions Advisor for ${cfg.role}.
+
+YOUR JOB: Recommend colleges/courses that realistically match the student's ACTUAL MARKS AND PROFILE — not aspirational fantasy picks, and not needlessly discouraging either. Every single recommendation must be a real, currently-operating institution located in (or, only if necessary, near) the student's PREFERRED DISTRICT.
+
+${cfg.yardstick}
+
+DISTRICT / LOCATION RULE — THIS IS NON-NEGOTIABLE:
+- The student will give you a preferred district. Every college you name MUST be physically located in that district.
+- If you genuinely cannot think of enough good, real options within that exact district for the student's tier, say so explicitly, then expand outward to the nearest neighbouring districts — and clearly label which colleges are "in [district]" vs "nearby, in [neighbouring district]".
+- Never silently substitute a college from a distant or unrelated district. Never pad the list with an unrelated-city "flagship" college just because it's famous — proximity to the student matters more than prestige here.
+- If no preferred district was given, say you're recommending state-wide and organize suggestions by region/city so the student can see where each one is.
+
+TIER FRAMEWORK — bucket every suggestion into exactly one of:
+- 🎯 TARGET: realistic, good admission chance given their marks/cutoff/rank for that tier of institution.
+- 🔒 SAFETY: very high admission chance — comfortably below their qualifying range.
+- ⚠️ REACH: possible but competitive — above their typical qualifying range; only include if genuinely plausible, not pure fantasy.
+Use your general knowledge of Indian institutions, admission trends, and typical cutoff ranges to place each recommendation in the right tier. If you're not confident of a college's exact current cutoff or fee, say so plainly and give an approximate range ("typically", "recent years suggest") rather than inventing a precise figure — a hedged real answer beats a confident fabricated one.
+
+OTHER RULES:
+- The student's reservation category can shift effective cutoffs meaningfully — factor this in qualitatively (OC/General cutoffs run higher than BC/MBC/SC/ST) without inventing exact category-wise numbers you don't know.
+- Mention approximate annual fees for every named institution (or "government/aided — low fees" vs "private — higher fees" if you don't know the exact figure).
+- Do not recommend anything requiring a national entrance exam score the student did not provide.
+- Be honest above all else — never oversell a reach as a target, and never bury a strong safety option.
+- Write for a 17-18 year old and their parents: plain language, no unexplained jargon, no invented statistics.
+- Keep the full response under 700 words, using the exact markdown structure below.
+
+RESPONSE FORMAT (use this exact structure):
+## 📊 Your Admission Profile
+[1-2 sentences summarizing their standing/tier and what it qualifies them for]
+
+## 🎯 Target Colleges / Courses (Good Admission Chance)
+3-4 specific real institutions **in their preferred district (or clearly-labelled nearby district)**, with brief reasoning and approximate fees
+
+## 🔒 Safety Options (Very High Admission Chance)
+1-2 reliable fallback options, same district rule applies
+
+## ⚠️ Reach Options (Competitive, Worth a Shot)
+1-2 stretch options if genuinely plausible — omit this section entirely if nothing reasonable qualifies
+
+## 💡 Next Steps
+- Concrete, stream-appropriate next actions (relevant counselling portal/authority, application windows, documents to prepare)`;
+}
+
+function buildPhase2UserPrompt(streamType, p, category, overall, tneaCutoff) {
+  let lines = [`Stream: ${streamType}`, `Overall %: ${overall}`, `Category: ${category}`];
+
+  if (streamType === 'engineering' || streamType === 'other') {
+    if (tneaCutoff) lines.push(`TNEA Cutoff Score: ${tneaCutoff}/200 (Maths×1 + Physics×0.5 + Chemistry×0.5)`);
+    if (p.physics) lines.push(`Physics: ${p.physics}%`);
+    if (p.chemistry) lines.push(`Chemistry: ${p.chemistry}%`);
+    if (p.mathbio) lines.push(`Maths: ${p.mathbio}%`);
+    if (p.jee) lines.push(`JEE Percentile: ${p.jee}%`);
+    if (p.cet) lines.push(`CET Rank: ${p.cet}`);
+  }
+  if (streamType === 'medical') {
+    if (p.bio) lines.push(`Biology: ${p.bio}%`);
+    if (p.chem2) lines.push(`Chemistry: ${p.chem2}%`);
+    if (p.phy2) lines.push(`Physics: ${p.phy2}%`);
+    if (p.neet) lines.push(`NEET Percentile/Score: ${p.neet}`);
+    if (p.medDegree) lines.push(`Preferred Degree: ${p.medDegree}`);
+  }
+  if (streamType === 'commerce') {
+    if (p.accounts) lines.push(`Accountancy: ${p.accounts}%`);
+    if (p.bst) lines.push(`Business Studies: ${p.bst}%`);
+    if (p.eco) lines.push(`Economics: ${p.eco}%`);
+    if (p.commMaths) lines.push(`Maths (if taken): ${p.commMaths}%`);
+    if (p.commDegree) lines.push(`Preferred Degree: ${p.commDegree}`);
+  }
+  if (streamType === 'arts') {
+    if (p.language) lines.push(`Language: ${p.language}%`);
+    if (p.sub1) lines.push(`Subject 1: ${p.sub1}%`);
+    if (p.sub2) lines.push(`Subject 2: ${p.sub2}%`);
+    if (p.sub3) lines.push(`Subject 3: ${p.sub3}%`);
+    if (p.artsSubjects) lines.push(`Arts Subjects Studied: ${p.artsSubjects}`);
+    if (p.artsDegree) lines.push(`Preferred Degree: ${p.artsDegree}`);
+    if (p.artsEntrance) lines.push(`Entrance Exam Taken (if any): ${p.artsEntrance}`);
+  }
+
+  lines.push(`Course Preference: ${p.coursePref || 'Any'}`);
+
+  const districtLine = p.location
+    ? `Preferred District: ${p.location} — ALL recommended colleges must be located in this district (expand to nearby districts only if truly necessary, and label those clearly).`
+    : `Preferred District: Not specified — recommend state-wide and organize by region/city.`;
+  lines.push(districtLine);
+
+  return `Student Profile:\n- ${lines.join('\n- ')}\n\nGenerate realistic college/course recommendations based on this profile, strictly respecting the district requirement above.`;
+}
+
+async function generatePhase2() {
+  const overall = document.getElementById('p2-overall').value;
+  const category = document.getElementById('p2-category').value;
+  const streamType = document.getElementById('selected-stream-type').value;
+  let valid = true;
+
+  // Clear all Phase II errors first
+  var p2ErrorIds = [
+    'p2-overall','p2-category',
+    'p2-physics','p2-chemistry','p2-mathbio',
+    'p2-language','p2-sub1','p2-sub2','p2-arts-subjects',
+    'p2-accounts','p2-bst','p2-eco',
+    'p2-bio','p2-chem2','p2-phy2'
+  ];
+  var p2ErrMap = {
+    'p2-overall':'err-p2-overall','p2-category':'err-p2-cat',
+    'p2-physics':'err-p2-physics','p2-chemistry':'err-p2-chemistry','p2-mathbio':'err-p2-maths',
+    'p2-language':'err-p2-language','p2-sub1':'err-p2-sub1','p2-sub2':'err-p2-sub2','p2-arts-subjects':'err-p2-arts-subjects',
+    'p2-accounts':'err-p2-accounts','p2-bst':'err-p2-bst','p2-eco':'err-p2-eco',
+    'p2-bio':'err-p2-bio','p2-chem2':'err-p2-chem2','p2-phy2':'err-p2-phy2'
+  };
+  p2ErrorIds.forEach(function(id) { clearFieldError(id, p2ErrMap[id]); });
+
+  // Always required
+  if (!overall) { showFieldError('p2-overall','err-p2-overall'); valid = false; }
+  if (!category) { showFieldError('p2-category','err-p2-cat'); valid = false; }
+
+  // Stream-specific required fields
+  if (streamType === 'engineering' || streamType === 'other') {
+    if (!document.getElementById('p2-physics').value) { showFieldError('p2-physics','err-p2-physics'); valid = false; }
+    if (!document.getElementById('p2-chemistry').value) { showFieldError('p2-chemistry','err-p2-chemistry'); valid = false; }
+    if (!document.getElementById('p2-mathbio').value) { showFieldError('p2-mathbio','err-p2-maths'); valid = false; }
+  }
+  if (streamType === 'arts') {
+    if (!document.getElementById('p2-language').value) { showFieldError('p2-language','err-p2-language'); valid = false; }
+    if (!document.getElementById('p2-sub1').value) { showFieldError('p2-sub1','err-p2-sub1'); valid = false; }
+    if (!document.getElementById('p2-sub2').value) { showFieldError('p2-sub2','err-p2-sub2'); valid = false; }
+    if (!document.getElementById('p2-arts-subjects').value.trim()) { showFieldError('p2-arts-subjects','err-p2-arts-subjects'); valid = false; }
+  }
+  if (streamType === 'commerce') {
+    if (!document.getElementById('p2-accounts').value) { showFieldError('p2-accounts','err-p2-accounts'); valid = false; }
+    if (!document.getElementById('p2-bst').value) { showFieldError('p2-bst','err-p2-bst'); valid = false; }
+    if (!document.getElementById('p2-eco').value) { showFieldError('p2-eco','err-p2-eco'); valid = false; }
+  }
+  if (streamType === 'medical') {
+    if (!document.getElementById('p2-bio').value) { showFieldError('p2-bio','err-p2-bio'); valid = false; }
+    if (!document.getElementById('p2-chem2').value) { showFieldError('p2-chem2','err-p2-chem2'); valid = false; }
+    if (!document.getElementById('p2-phy2').value) { showFieldError('p2-phy2','err-p2-phy2'); valid = false; }
+  }
+
+  if (!valid) {
+    // Scroll to first error
+    var firstErr = document.querySelector('.field-error.visible');
+    if (firstErr) firstErr.scrollIntoView({ behavior:'smooth', block:'center' });
+    return;
+  }
+
+  // Gather all stream-specific fields
+  const p = {
+    overall, category, streamType,
+    physics: document.getElementById('p2-physics')?.value || '',
+    chemistry: document.getElementById('p2-chemistry')?.value || '',
+    mathbio: document.getElementById('p2-mathbio')?.value || '',
+    jee: document.getElementById('p2-jee')?.value || '',
+    neet: document.getElementById('p2-neet')?.value || '',
+    cet: document.getElementById('p2-cet')?.value || '',
+    language: document.getElementById('p2-language')?.value || '',
+    sub1: document.getElementById('p2-sub1')?.value || '',
+    sub2: document.getElementById('p2-sub2')?.value || '',
+    sub3: document.getElementById('p2-sub3')?.value || '',
+    artsSubjects: document.getElementById('p2-arts-subjects')?.value || '',
+    artsDegree: document.getElementById('p2-arts-degree')?.value || '',
+    artsEntrance: document.getElementById('p2-arts-entrance')?.value || '',
+    accounts: document.getElementById('p2-accounts')?.value || '',
+    bst: document.getElementById('p2-bst')?.value || '',
+    eco: document.getElementById('p2-eco')?.value || '',
+    commMaths: document.getElementById('p2-comm-maths')?.value || '',
+    commDegree: document.getElementById('p2-comm-degree')?.value || '',
+    bio: document.getElementById('p2-bio')?.value || '',
+    chem2: document.getElementById('p2-chem2')?.value || '',
+    phy2: document.getElementById('p2-phy2')?.value || '',
+    medDegree: document.getElementById('p2-med-degree')?.value || '',
+    coursePref: document.getElementById('p2-course-pref').value,
+    location: document.getElementById('p2-location').value,
+  };
+
+  // Compute TNEA cutoff if engineering
+  // Formula: Maths×1 + Physics×0.5 + Chemistry×0.5  (out of 200, where each subject % is out of 100)
+  let tneaCutoff = '';
+  if (streamType === 'engineering' && p.mathbio && p.physics && p.chemistry) {
+    const tnea = (parseFloat(p.mathbio)*1 + parseFloat(p.physics)*0.5 + parseFloat(p.chemistry)*0.5).toFixed(2);
+    tneaCutoff = tnea;
+  }
+
+  goToScreen('screen-loading2');
+
+  // ── Build the prompt for the AI model (stream-aware) ──
+  const systemPrompt = buildPhase2SystemPrompt(streamType);
+  const userPrompt = buildPhase2UserPrompt(streamType, p, category, overall, tneaCutoff);
+
+  try {
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        systemPrompt: systemPrompt,
+        messages: [{ role: 'user', content: userPrompt }]
+      })
+    });
+
+    if (!response.ok) throw new Error('Server responded with status ' + response.status);
+
+    const data = await response.json();
+    const text = data.reply || '';
+
+    if (!text) throw new Error('The AI returned an empty response.');
+
+    // Pre-fill marks for Top 5 finder and show results
+    const marksEl = document.getElementById('p2-marks');
+    if (marksEl && p.overall) marksEl.value = p.overall;
+
+    document.getElementById('results2-content').innerHTML = renderMarkdown(text);
+    goToScreen('screen-results2');
+  } catch (err) {
+    document.getElementById('results2-content').innerHTML = `<div class="analysis-box"><h4>⚠️ Something went wrong</h4><p>We couldn't get your eligibility report from the AI advisor right now.<br><small>${err.message}</small></p><p style="margin-top:0.8rem;"><button class="btn-secondary" onclick="generatePhase2()">↻ Try again</button></p></div>`;
+    goToScreen('screen-results2');
+  }
+}
+
+
+// ── MARKDOWN RENDERER ──
+function renderMarkdown(text) {
+  const lines = text.split('\n');
+  let html = '';
+  let inList = false;
+  let inSection = false; // tracks whether we're inside an ## analysis-box
+  let inCombo = false;   // tracks whether we're inside a #### combo card
+
+  function closeList() {
+    if (inList) { html += '</ul>'; inList = false; }
+  }
+  function closeSection() {
+    if (inSection) { html += '</div>'; inSection = false; }
+  }
+  function closeCombo() {
+    if (inCombo) { closeList(); html += '</div>'; inCombo = false; }
+  }
+
+  for (let line of lines) {
+    line = line.trim();
+
+    if (!line) {
+      closeList();
+      if (!inCombo) html += '<div style="height:0.5rem"></div>';
+      continue;
+    }
+
+    // Separator ---
+    if (line === '---') {
+      closeList(); closeCombo();
+      html += '<hr class="combo-divider">';
+      continue;
+    }
+
+    // H1 — big title outside any section
+    if (line.startsWith('# ')) {
+      closeList(); closeCombo(); closeSection();
+      html += `<div class="result-title" style="font-size:1.6rem;margin-bottom:0.5rem;">${formatInline(line.replace(/^# /, ''))}</div>`;
+      continue;
+    }
+
+    // H2 — opens a new named section card
+    if (line.startsWith('## ')) {
+      closeList(); closeCombo(); closeSection();
+      html += `<div class="analysis-box" style="margin-top:1.5rem;border-left-color:var(--gold);">`;
+      html += `<h4 style="font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--gold);margin-bottom:0.8rem;">${formatInline(line.replace(/^## /, ''))}</h4>`;
+      inSection = true;
+      continue;
+    }
+
+    // H3 — sub-heading inside a section
+    if (line.startsWith('### ')) {
+      closeList();
+      html += `<p style="font-weight:700;color:var(--paper);font-size:0.95rem;margin:1rem 0 0.3rem;">${formatInline(line.replace(/^### /, ''))}</p>`;
+      continue;
+    }
+
+    // H4 — opens a combo card
+    if (line.startsWith('#### ')) {
+      closeList(); closeCombo(); closeSection();
+      html += `<div class="combo-card"><div class="combo-card-title">${formatInline(line.replace(/^#### /, ''))}</div>`;
+      inCombo = true;
+      continue;
+    }
+
+    // Bullet list item
+    if (line.startsWith('- ') || line.startsWith('• ') || line.startsWith('* ')) {
+      if (!inList) { html += '<ul style="padding-left:1.3rem;margin:0.5rem 0">'; inList = true; }
+      html += `<li style="font-size:0.88rem;color:rgba(245,240,232,0.78);line-height:1.7;margin-bottom:0.25rem;">${formatInline(line.replace(/^[-•*] /, ''))}</li>`;
+      continue;
+    }
+
+    // Numbered list item
+    if (/^\d+\.\s/.test(line)) {
+      closeList();
+      html += `<p style="font-size:0.88rem;color:rgba(245,240,232,0.78);line-height:1.7;margin:0.25rem 0;">${formatInline(line)}</p>`;
+      continue;
+    }
+
+    closeList();
+
+    // Bold-only line → treat as sub-heading
+    if (/^\*\*[^*]+\*\*$/.test(line)) {
+      html += `<p style="font-weight:700;color:var(--gold-light);font-size:0.92rem;margin:0.9rem 0 0.2rem;">${formatInline(line)}</p>`;
+    } else {
+      html += `<p style="font-size:0.88rem;color:rgba(245,240,232,0.75);line-height:1.7;margin:0.25rem 0;">${formatInline(line)}</p>`;
+    }
+  }
+
+  closeList();
+  closeCombo();
+  closeSection();
+
+  // If the AI returned text with no ## headers, wrap everything in one card
+  if (!html.includes('analysis-box')) {
+    return `<div class="analysis-box" style="border-left-color:var(--gold);">${html}</div>`;
+  }
+  return html;
+}
+
+function formatInline(text) {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong style="color:var(--gold-light)">$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/✅/g, '<span style="color:#4CAF50">✅</span>')
+    .replace(/⚠️/g, '<span style="color:#FF9800">⚠️</span>')
+    .replace(/❌/g, '<span style="color:#f44336">❌</span>');
+}
+
+// ── AI CHATBOT ──
+let chatOpen = false;
+let chatHistory = [];
+
+function toggleChatbot() {
+  chatOpen = !chatOpen;
+  document.getElementById('chatbot-panel').classList.toggle('open', chatOpen);
+  if (chatOpen) document.getElementById('chat-input').focus();
+}
+
+function sendChatSuggest(el) {
+  document.getElementById('chat-input').value = el.textContent;
+  sendChat();
+}
+
+async function sendChat() {
+  const input = document.getElementById('chat-input');
+  const msg = input.value.trim();
+  if (!msg) return;
+  input.value = '';
+
+  appendChatMsg('user', msg);
+  document.getElementById('chat-suggestions').style.display = 'none';
+  const typingId = appendChatMsg('typing', '● ● ●');
+
+  chatHistory.push({ role: 'user', content: msg });
+
+  const systemPrompt = `You are an AI Career Advisor for 12th-pass students in India, specializing in Tamil Nadu.
+
+EXPERTISE:
+- Engineering: TNEA cutoffs, college tiers, CSE/ECE/Mech specializations
+- Arts & Science: BA/BSc admissions, course eligibility, career paths
+- Commerce: B.Com, BBA, CA/CS, finance careers
+- Medical: NEET scores, medical colleges, nursing
+- Aptitude: Helping students choose streams
+
+TAMIL NADU COLLEGES (Realistic Cutoffs):
+TIER 1 (190+): CEG, MIT, ACE — top colleges, CSE only for 195+
+TIER 2A (160-185): SRM, VIT, Saveetha, Rajalakshmi — very good colleges
+TIER 2B (140-165): Meenakshi, Dr. MGR, Sairam, Panimalar — good colleges, affordable
+TIER 3 (120-145): Loyola ICAM, Vel Tech, KCG — decent colleges, reachable
+AIDED: Easwari, KCG — government-aided, very affordable (₹1-1.2L/year)
+
+KEY ACCURACY RULES:
+1. If asked about colleges for 160-170 cutoff: DO NOT suggest CEG/MIT (need 190+)
+   Instead: "You qualify for SRM, Saveetha, Meenakshi, Sairam"
+2. Course eligibility: PCM→Engineering, PCB→Medical/Food Tech, Commerce→Commerce courses
+3. Be honest: "Your cutoff is strong for Tier 2A colleges, not Tier 1"
+4. Always cite realistic fee ranges (₹3-4L/year private, ₹1-2L/year aided)
+
+TONE: Warm, honest, concise (2-3 sentences). Use ✅ for good choices, ⚠️ for reaches, ❌ for impossible paths.`;
+
+  try {
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        systemPrompt: systemPrompt,
+        messages: chatHistory
+      })
+    });
+    const data = await response.json();
+  
+    if (!response.ok) {
+      throw new Error(data.error || 'Failed to get response');
+    }
+    
+    const reply = data.reply || 'Sorry, I could not get a response. Please try again.';
+    chatHistory.push({ role: 'assistant', content: reply });
+    removeTyping(typingId);
+    appendChatMsg('bot', reply);
+  } catch (err) {
+    removeTyping(typingId);
+    appendChatMsg('bot', '⚠️ Connection error: ' + err.message);
+  }
+}
+
+let msgIdCounter = 0;
+function appendChatMsg(type, text) {
+  const container = document.getElementById('chatbot-messages');
+  const id = 'msg-' + (++msgIdCounter);
+  const div = document.createElement('div');
+  div.className = 'chat-msg ' + type;
+  div.id = id;
+  div.innerHTML = text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/✅/g,'<span style="color:#4CAF50">✅</span>').replace(/⚠️/g,'<span style="color:#FF9800">⚠️</span>').replace(/❌/g,'<span style="color:#f44336">❌</span>');
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+  return id;
+}
+
+function removeTyping(id) {
+  const el = document.getElementById(id);
+  if (el) el.remove();
+}
+
+function resetAll() {
+  // Reset all app state
+  state = { name:'', stream:'', marks:'', state:'', interests:[], interestText:'', personality:'', skills:{}, careerGoal:'', studyDuration:'', feeBudget:'', extraNotes:'', phase1Result:'' };
+
+  // Reset quiz state
+  clearQuizTimer(); clearMemoryTimer();
+  QUIZ_DATA = buildCATQuizData();
+  quizSkillIdx = 0; quizQIdx = 0; quizAnswers = {}; quizSelected = null;
+  quizTimerLocked = false; memoryPhase = 'show'; memoryMultiSelected = new Set();
+
+  // Reset text/number inputs for Phase I
+  ['student-name','student-marks','student-state','interest-text','extra-notes'].forEach(function(id) {
+    var el = document.getElementById(id); if (el) el.value = '';
+  });
+  // Reset selects for Phase I
+  ['student-stream','career-goal','study-duration','fee-budget','personality'].forEach(function(id) {
+    var el = document.getElementById(id); if (el) el.selectedIndex = 0;
+  });
+
+  // Reset interest tags
+  document.querySelectorAll('#interests-tags .tag').forEach(function(t) { t.classList.remove('selected'); });
+
+  // Reset Phase II inputs
+  ['p2-overall','p2-physics','p2-chemistry','p2-mathbio','p2-jee','p2-cet',
+   'p2-language','p2-sub1','p2-sub2','p2-sub3','p2-neet',
+   'p2-accounts','p2-bst','p2-eco','p2-comm-maths','p2-bio','p2-chem2','p2-phy2'].forEach(function(id) {
+    var el = document.getElementById(id); if (el) el.value = '';
+  });
+  var catEl = document.getElementById('p2-category'); if (catEl) catEl.selectedIndex = 0;
+  var coursePrefEl = document.getElementById('p2-course-pref'); if (coursePrefEl) coursePrefEl.value = '';
+  var locEl = document.getElementById('p2-location'); if (locEl) locEl.value = '';
+
+  // Clear result containers
+  var r1 = document.getElementById('results-content'); if (r1) r1.innerHTML = '';
+  var r2 = document.getElementById('results2-content'); if (r2) r2.innerHTML = '';
+
+  // Hide all error banners and field errors
+  document.querySelectorAll('.error-banner, .field-error, .tags-error').forEach(function(el) { el.classList.remove('visible'); });
+  document.querySelectorAll('.form-input.error, .form-select.error').forEach(function(el) { el.classList.remove('error'); });
+
+  // Reset navigation UI
+  document.getElementById('home-screen').style.display = '';
+  document.getElementById('phases-nav').style.display = 'none';
+  document.getElementById('tab1').classList.remove('active');
+  document.getElementById('tab2').classList.remove('active');
+
+  // Reset Phase II stream type tabs back to engineering
+  document.querySelectorAll('.stream-tab-btn').forEach(function(b, i) { b.classList.toggle('active', i === 0); });
+  var selStream = document.getElementById('selected-stream-type');
+  if (selStream) selStream.value = 'engineering';
+  ['eng-fields','arts-fields','commerce-fields','medical-fields'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.style.display = (id === 'eng-fields') ? '' : 'none';
+  });
+
+  // Deactivate all screens then show home
+  document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+</script>
+
+<!-- ───────── AI CAREER ADVISOR CHATBOT ───────── -->
+<button class="chatbot-fab" onclick="toggleChatbot()" title="AI Career Advisor">
+  🤖
+  <span class="fab-badge">AI</span>
+</button>
+
+<div class="chatbot-panel" id="chatbot-panel">
+  <div class="chatbot-header">
+    <div class="chatbot-avatar">🎓</div>
+    <div class="chatbot-header-info">
+      <strong>AI Career Advisor</strong>
+      <span>Ask me anything about courses &amp; careers</span>
+    </div>
+    <button class="chatbot-close" onclick="toggleChatbot()">✕</button>
+  </div>
+  <div class="chatbot-messages" id="chatbot-messages">
+    <div class="chat-msg bot">👋 Hi! I'm your AI Career Advisor. Ask me anything — like <em>"Can I study Food Technology after Biology?"</em> or <em>"What is the cutoff for CSE at Anna University?"</em></div>
+  </div>
+  <div class="chatbot-suggestions" id="chat-suggestions">
+    <span class="chat-suggest" onclick="sendChatSuggest(this)">Can I study Food Tech after Biology?</span>
+    <span class="chat-suggest" onclick="sendChatSuggest(this)">Cutoff for CSE at Anna University?</span>
+    <span class="chat-suggest" onclick="sendChatSuggest(this)">Best courses for Arts students</span>
+    <span class="chat-suggest" onclick="sendChatSuggest(this)">Career after B.Com?</span>
+  </div>
+  <div class="chatbot-input-row">
+    <input class="chatbot-input" id="chat-input" type="text" placeholder="Ask about courses, cutoffs, careers…" onkeydown="if(event.key==='Enter')sendChat()"/>
+    <button class="chatbot-send" onclick="sendChat()">➤</button>
+  </div>
+</div>
+
+</body>
+</html>
