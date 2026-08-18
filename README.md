@@ -1,6 +1,7 @@
 # Career Compass
 
 🔗 **Live Demo:** https://career-compass-yhpp.onrender.com/
+
 Career Compass is a web-based career guidance platform designed to help 
 12th-grade students navigate one of the most difficult decisions of their 
 academic life — choosing the right career path.
